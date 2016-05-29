@@ -4,15 +4,19 @@ package org.interfacedesign.base.exception;
  * Created by lishaohua on 16-5-25.
  */
 public class DesignException extends RuntimeException {
-    private final String errorCode;
+    private final int status;
 
-    public DesignException(String errorCode) {
-        this.errorCode = errorCode;
+    public DesignException(int status) {
+        this.status = status;
     }
 
-    public DesignException(String errorCode, String message) {
+    public DesignException(int status, String message) {
         super(message);
-        this.errorCode = errorCode;
+        this.status = status;
+    }
+
+    public int getStatus() {
+        return this.status;
     }
 
 }

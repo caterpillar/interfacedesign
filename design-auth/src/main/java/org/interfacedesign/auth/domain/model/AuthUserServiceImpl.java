@@ -1,7 +1,7 @@
 package org.interfacedesign.auth.domain.model;
 
 import org.apache.commons.lang3.StringUtils;
-import org.interfacedesign.auth.domain.exception.AuthException;
+import org.interfacedesign.base.exception.NotFindException;
 import org.interfacedesign.base.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +19,10 @@ public class AuthUserServiceImpl implements AuthUserService {
 
     public PasswordAuthUser getPasswordAuthUser(String userName, String password) {
         if(StringUtils.isEmpty(userName)) {
-            throw new AuthException("用户名不能为空");
+            throw new IllegalArgumentException("用户名不能为空");
         }
         if(StringUtils.isEmpty(password)) {
-            throw new AuthException("密码不能为空");
+            throw new IllegalArgumentException("密码不能为空");
         }
         String passwordMd5 = MD5Util.string2MD5(password);
         return passwordAuthUserRepository.findByUserNameAndPassword(userName, passwordMd5);
@@ -31,11 +31,11 @@ public class AuthUserServiceImpl implements AuthUserService {
     @Transactional
     public void addAuthUser(String userName, String password) {
         if(StringUtils.isEmpty(userName)) {
-            throw new AuthException("用户名不能为空");
+            throw new IllegalArgumentException("用户名不能为空");
         }
         PasswordAuthUser passwordAuthUser = passwordAuthUserRepository.findByUserName(userName);
         if(passwordAuthUser != null) {
-            throw new AuthException("002", "用户名重复");
+            throw new IllegalArgumentException("用户名重复");
         }
         String passwordMd5 = DEFAULT_PASSWORD_MD5;
         if(StringUtils.isNotEmpty(password)) {
@@ -62,7 +62,7 @@ public class AuthUserServiceImpl implements AuthUserService {
         }
         PasswordAuthUser passwordAuthUser = passwordAuthUserRepository.findByUserName(userName);
         if(passwordAuthUser == null) {
-            throw new AuthException("003", userName + "用户不存在");
+            throw new NotFindException(userName + "用户不存在");
         }
         return passwordAuthUser;
     }

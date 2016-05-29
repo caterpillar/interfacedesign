@@ -9,6 +9,7 @@ public class UserInfo {
     private Long id;
     private String userName;
     private Date joinTime;
+    private String token;
 
 
     public Long getId() {
@@ -33,5 +34,13 @@ public class UserInfo {
 
     public void setJoinTime(Date joinTime) {
         this.joinTime = joinTime;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

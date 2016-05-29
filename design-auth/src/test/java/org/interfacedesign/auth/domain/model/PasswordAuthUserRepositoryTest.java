@@ -20,7 +20,7 @@ public class PasswordAuthUserRepositoryTest {
     @Test
     @Transactional
     public void testSave() {
-        passwordAuthUserRepository.save(new PasswordAuthUser("test3", "passw0rd"));
+        passwordAuthUserRepository.save(new PasswordAuthUser("hhlucky_12", "passw0rd"));
     }
 
 }

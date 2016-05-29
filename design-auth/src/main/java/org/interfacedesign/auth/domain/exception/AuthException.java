@@ -7,13 +7,8 @@ import org.interfacedesign.base.exception.DesignException;
  */
 public class AuthException extends DesignException {
 
-    public AuthException(String errorCode) {
-        super(errorCode);
+    public AuthException(int status, String message) {
+        super(status, message);
     }
-
-    public AuthException(String errorCode, String message) {
-        super(errorCode, message);
-    }
-
 
 }

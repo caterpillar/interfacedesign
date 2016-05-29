@@ -21,20 +21,22 @@ public class AuthUserServiceImplTest {
     private AuthUserService authUserService;
 
     @Test
+    @Transactional
     public void testGetPasswordAuthUser() throws Exception {
-        String userName = "test2";
+        String userName = "hh_lucky";
         String password = "passw0rd";
+        authUserService.addAuthUser(userName, password);
         PasswordAuthUser passwordAuthUser = authUserService.getPasswordAuthUser(userName, password);
         assertNotNull(passwordAuthUser);
     }
 
     @Test
-//    @Transactional
+    @Transactional
     public void testAddAuthUser() throws Exception {
         authUserService.addAuthUser("hh_lucky", "111111");
     }
 
-    @Test(expected = AuthException.class)
+    @Test(expected = IllegalArgumentException.class)
     @Transactional
     public void testAddAuthUserDuplicateName() throws Exception {
         authUserService.addAuthUser("hh_lucky", "111111");
