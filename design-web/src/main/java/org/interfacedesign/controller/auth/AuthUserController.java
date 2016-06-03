@@ -5,6 +5,8 @@ import org.interfacedesign.auth.domain.model.AuthUserService;
 import org.interfacedesign.auth.domain.model.PasswordAuthUser;
 import org.interfacedesign.base.exception.NotFindException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by lishaohua on 16-5-26.
  */
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/authUser")
 public class AuthUserController {
     @Autowired
     private AuthUserService authUserService;
@@ -40,6 +42,17 @@ public class AuthUserController {
     @RequestMapping(value = "/{userName}/{password}", method = RequestMethod.POST)
     public @ResponseBody void savePasswordAuthUser(@PathVariable String userName, @PathVariable String password) {
         authUserService.addAuthUser(userName, password);
+    }
+
+
+    public void test() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails)principal).getUsername();
+        } else {
+            String username = principal.toString();
+        }
     }
 
 }

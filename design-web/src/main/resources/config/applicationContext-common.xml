@@ -9,6 +9,8 @@
 
     <context:component-scan base-package="org.interfacedesign"/>
 
+    <import resource="spring-security.xml" />
+
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="order" value="10" />
         <property name="ignoreUnresolvablePlaceholders" value="true" />

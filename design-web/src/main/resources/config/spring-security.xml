@@ -1,0 +1,40 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd">
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="jimi" password="jimi" authorities="ROLE_USER, ROLE_ADMIN"/>
+                <user name="bob" password="bob" authorities="ROLE_USER"/>
+            </user-service>
+        </authentication-provider>
+
+        <!--<authentication-provider user-service-ref="myUserDetailsService" />-->
+    </authentication-manager>
+
+    <!--<beans:bean id="myUserDetailsService"-->
+    <!--class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">-->
+    <!--<beans:property name="dataSource" ref="dataSource"/>-->
+    <!--</beans:bean>-->
+
+    <http pattern="/views/login.jsp" security="none"/>
+    <http pattern="/login" security="none"/>
+    <http pattern="/css/*" security="none"/>
+
+    <http>
+        <intercept-url pattern="/**" access="hasRole('USER')"/>
+        <form-login login-processing-url="/user/login" login-page="/views/login.jsp"
+                    default-target-url="/views/index.jsp"
+                    always-use-default-target="true"/>
+        <form-login/>
+        <logout logout-url="/user/logout"/>
+        <csrf token-repository-ref="tokenRepository" disabled="true"/>
+    </http>
+    <beans:bean id="tokenRepository" class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository">
+
+    </beans:bean>
+</beans:beans>
