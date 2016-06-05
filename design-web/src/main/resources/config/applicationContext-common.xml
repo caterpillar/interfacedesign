@@ -18,7 +18,8 @@
         <property name="locations">
             <list>
                 <value>classpath:config/system.properties</value>
-                <value>file:/home/config.properties</value>
+                <value>file:/home/config/system.properties</value>
+                <value>classpath:config/security-sql.xml</value>
             </list>
         </property>
     </bean>

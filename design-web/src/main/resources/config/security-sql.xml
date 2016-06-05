@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>
+        spring security sql
+    </comment>
+
+    <entry key="usersByUsernameQuery">
+        SELECT
+            name,
+            password,
+            enabled
+        FROM
+            users
+        WHERE name = ?
+    </entry>
+    <entry key="authoritiesByUsernameQuery">
+        SELECT
+            u.name    AS username,
+            role.name AS rolename
+        FROM (SELECT
+                id,
+                name
+              FROM users
+              WHERE name = ?) AS u INNER JOIN users_role ON u.id = users_role.users_id
+        INNER JOIN role ON users_role.role_id = role.id
+    </entry>
+    <entry key="groupAuthoritiesByUsernameQuery">
+        SELECT
+            groups.name        AS groupsname,
+            groups.description AS groupsdesc,
+            role.name          AS rolename
+        FROM
+        (SELECT groups_id
+        FROM (SELECT id
+        FROM users
+        WHERE name = ?) AS u
+        INNER JOIN users_groups ON u.id = users_groups.users_id) AS g
+        INNER JOIN groups ON g.groups_id = groups.id
+        INNER JOIN groups_role ON groups.id = groups_role.groups_id
+        INNER JOIN role ON groups_role.role_id = role.id
+    </entry>
+
+</properties>

@@ -103,9 +103,6 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
-	<!-- 配置Spring Data JPA扫描目录 -->
-	<jpa:repositories base-package="org.interfacedesign.auth.domain.model" />
-
 	<!-- 使用注解方式定义事务 -->
 	<tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager" />
 

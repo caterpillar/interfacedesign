@@ -21,5 +21,8 @@
           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
     
     <context:component-scan base-package="org.interfacedesign.auth.domain.model"/>
+
+    <!-- 配置Spring Data JPA扫描目录 -->
+    <jpa:repositories base-package="org.interfacedesign.auth.domain.model" />
     
 </beans>
