@@ -1,6 +1,7 @@
 package org.interfacedesign.auth.domain.model;
 
-import org.interfacedesign.auth.domain.exception.AuthException;
+import org.interfacedesign.auth.domain.model.authUser.AuthUserService;
+import org.interfacedesign.auth.domain.model.authUser.PasswordAuthUser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

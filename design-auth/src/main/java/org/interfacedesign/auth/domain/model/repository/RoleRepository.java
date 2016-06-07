@@ -1,7 +1,13 @@
 package org.interfacedesign.auth.domain.model.repository;
 
+import org.interfacedesign.auth.domain.model.Role;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 /**
  * Created by lishaohua on 16-6-7.
  */
-public interface RoleRepository {
+@Repository
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    public Role findRoleByName(String name);
 }

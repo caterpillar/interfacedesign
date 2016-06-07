@@ -1,8 +1,8 @@
 package org.interfacedesign.controller.auth;
 
 import org.interfacedesign.assembler.UserInfo;
-import org.interfacedesign.auth.domain.model.AuthUserService;
-import org.interfacedesign.auth.domain.model.PasswordAuthUser;
+import org.interfacedesign.auth.domain.model.authUser.AuthUserService;
+import org.interfacedesign.auth.domain.model.authUser.PasswordAuthUser;
 import org.interfacedesign.base.exception.NotFindException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
