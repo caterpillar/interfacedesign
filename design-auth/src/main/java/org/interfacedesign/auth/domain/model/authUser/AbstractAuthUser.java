@@ -1,4 +1,4 @@
-package org.interfacedesign.auth.domain.model;
+package org.interfacedesign.auth.domain.model.authUser;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package org.interfacedesign.auth.domain.model;
+package org.interfacedesign.auth.domain.model.authUser;
 
 import org.apache.commons.lang3.StringUtils;
 import org.interfacedesign.base.exception.NotFindException;

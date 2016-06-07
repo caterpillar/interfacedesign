@@ -1,4 +1,4 @@
-package org.interfacedesign.auth.domain.model;
+package org.interfacedesign.auth.domain.model.authUser;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

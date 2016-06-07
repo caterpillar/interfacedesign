@@ -1,4 +1,4 @@
-package org.interfacedesign.auth.domain.model;
+package org.interfacedesign.auth.domain.model.authUser;
 
 /**
  * Created by lishaohua on 16-5-25.
