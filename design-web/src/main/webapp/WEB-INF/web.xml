@@ -73,6 +73,19 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+
+    <filter>
+        <filter-name>hibernateFilter</filter-name>
+        <filter-class>
+            org.springframework.orm.hibernate4.support.OpenSessionInViewFilter
+        </filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>/user</url-pattern>
+    </filter-mapping>
+
     <error-page>
         <error-code>404</error-code>
         <location>/views/error/404.jsp</location>

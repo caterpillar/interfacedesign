@@ -1,8 +1,10 @@
 package org.interfacedesign.auth.domain.model;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -69,6 +71,9 @@ public class Role extends IdEntity {
     }
 
     public void modifyDescription(String description) {
+        if(StringUtils.isEmpty(description)) {
+            throw new IllegalArgumentException("角色描述不能为空");
+        }
         this.description = description;
     }
 
@@ -87,6 +92,13 @@ public class Role extends IdEntity {
             this.usersSet = new HashSet<Users>();
         }
         return this.usersSet.add(users);
+    }
+
+    public boolean addUsers(Collection<Users> users) {
+        if(CollectionUtils.isEmpty(users)) {
+            return false;
+        }
+        return this.usersSet.addAll(users);
     }
 
     public boolean removeUsers(Users users) {

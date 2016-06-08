@@ -1,6 +1,11 @@
 package org.interfacedesign.controller.auth;
 
 import org.interfacedesign.assembler.UserInfo;
+import org.interfacedesign.auth.domain.model.Users;
+import org.interfacedesign.auth.domain.model.UsersService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    @Autowired
+    private UsersService usersService;
 
     @RequestMapping(value="/login",method=RequestMethod.POST)
     @ResponseBody
@@ -26,4 +33,9 @@ public class UserController {
         return null;
     }
 
+    @RequestMapping(method=RequestMethod.GET)
+    @ResponseBody
+    public Page<Users> getUsers(Pageable pageable) {
+        return usersService.getAllUsers(pageable);
+    }
 }

@@ -6,7 +6,9 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Pattern;
 
 /**
@@ -23,7 +25,7 @@ public class Users extends IdEntity {
     private String password;
     @Column(name = "enabled")
     private Boolean enabled;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinTable(name="users_role", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
@@ -51,10 +53,6 @@ public class Users extends IdEntity {
             throw new IllegalArgumentException("用户名必须以字母开头，且只能包含数字和下划线的6到16个字符的字符串");
         }
         this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void modifyPassword(String password) {
@@ -87,6 +85,8 @@ public class Users extends IdEntity {
         if(CollectionUtils.isEmpty(this.roles)) {
             this.roles = new HashSet<Role>();
         }
+
         return roles.add(role);
     }
+
 }

@@ -8,8 +8,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.Transient;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -36,7 +34,7 @@ public class RolesRepositoryTest {
         Role role = new Role("UNIT_TEST", "the role to design the interface");
         roleRepository.save(role);
 
-        Role designer = roleRepository.findRoleByName("UNIT_TEST");
+        Role designer = roleRepository.findByName("UNIT_TEST");
 
         assertNotNull(designer);
         assertEquals(designer.getName(), "UNIT_TEST");

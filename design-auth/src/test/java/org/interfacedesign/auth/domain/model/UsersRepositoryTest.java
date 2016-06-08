@@ -9,9 +9,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import static org.junit.Assert.*;
 
 /**
@@ -43,7 +40,7 @@ public class UsersRepositoryTest {
     @Transactional
     public void saveUsersAndRole() {
         Users users = new Users("lishaohua");
-        Role designer = roleRepository.findRoleByName("DESIGNER");
+        Role designer = roleRepository.findByName("DESIGNER");
 //        Set<Role> roleSet = new HashSet<Role>();
 //        roleSet.add(designer);
         users.addRole(designer);
