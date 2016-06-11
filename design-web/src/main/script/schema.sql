@@ -157,13 +157,21 @@ ALTER TABLE web_resource COMMENT '系统资源';
 /*==============================================================*/
 CREATE TABLE `designer` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `name` varchar(50) NOT NULL COMMENT '设计者姓名',
+  `first_name` varchar(50) NOT NULL COMMENT '设计者first name',
+  `second_name` varchar(50) NOT NULL COMMENT '设计者second name',
   `mobile_phone` varchar(20) NOT NULL COMMENT '移动电话号码',
   `email` varchar(50) DEFAULT NULL COMMENT 'email地址',
   `nick_name` varchar(50) DEFAULT NULL COMMENT '昵称',
   `photograph` varchar(200) DEFAULT NULL COMMENT '照面uri',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='设计者';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='设计者';
+
+CREATE TABLE `project` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(50) DEFAULT NULL COMMENT '项目名称',
+  `description` varchar(300) DEFAULT NULL COMMENT '项目描述',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT ='项目';
 
 ALTER TABLE security_metadata ADD CONSTRAINT FK_security_metadata_Reference_role FOREIGN KEY (role_id)
 REFERENCES role (id)
