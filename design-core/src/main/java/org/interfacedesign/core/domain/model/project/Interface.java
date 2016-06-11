@@ -1,5 +1,7 @@
 package org.interfacedesign.core.domain.model.project;
 
+import javax.persistence.MappedSuperclass;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Li Shaohua
@@ -7,6 +9,7 @@ package org.interfacedesign.core.domain.model.project;
  * Time: 15:25
  * 实现业务需求
  */
+@MappedSuperclass
 public interface Interface {
 
 }

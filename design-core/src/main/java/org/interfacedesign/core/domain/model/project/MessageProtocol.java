@@ -10,4 +10,6 @@ package org.interfacedesign.core.domain.model.project;
 public enum MessageProtocol {
     XML,
     JSON
+
+
 }

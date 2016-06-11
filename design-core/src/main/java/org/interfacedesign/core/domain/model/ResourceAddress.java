@@ -1,6 +1,10 @@
 package org.interfacedesign.core.domain.model;
 
 import org.apache.commons.lang3.StringUtils;
+import org.interfacedesign.base.util.Assert;
+
+import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,18 +13,23 @@ import org.apache.commons.lang3.StringUtils;
  * Time: 16:01
  * 实现业务需求
  */
+@Embeddable
 public class ResourceAddress {
     private static final String RESOURCE_SPLITTER = "/";
-    private final ResourceRoot resourceRoot;
-    private final String resourceLocation;
+    @Transient
+    private String resourceRoot;
+    private String resourceLocation;
 
     private static final ResourceRoot IMAGE_RESOURCE = new ResourceRoot(TransferProtocol.HTTP1, "127.0.0.1", 8000, "helloworld");
 
-    public static ResourceAddress buildImageResourceAddress(String resourceLocation) {
-        return new ResourceAddress(IMAGE_RESOURCE, resourceLocation);
+    public ResourceAddress() {
     }
 
-    private ResourceAddress(ResourceRoot resourceRoot, String resourceLocation) {
+    public static ResourceAddress buildImageResourceAddress(String resourceLocation) {
+        return new ResourceAddress("http://localhost:8000/", resourceLocation);
+    }
+
+    private ResourceAddress(String resourceRoot, String resourceLocation) {
         if (resourceRoot == null) {
             throw new IllegalArgumentException("resource root can't be null");
         }
@@ -33,8 +42,17 @@ public class ResourceAddress {
 
     @Override
     public String toString() {
-        return new StringBuffer(this.resourceRoot.toString())
-                .append(RESOURCE_SPLITTER).append(resourceLocation).toString();
+        return new StringBuffer("http://localhost:8000")
+                .append(resourceLocation).toString();
+    }
+
+    public void setReourceUri(String resourceUri) {
+        Assert.notEmpty(resourceUri);
+
+    }
+
+    public String getResourceUri() {
+        return toString();
     }
 
     public static class ResourceRoot {

@@ -1,6 +1,7 @@
 package org.interfacedesign.auth.domain.model;
 
 import org.apache.commons.lang3.StringUtils;
+import org.interfacedesign.base.entity.LongIdEntity;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -13,14 +14,14 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "role")
-public class Role extends IdEntity {
+public class Role extends LongIdEntity {
     @Column(name = "name")
     private String name;
     @Column(name = "description")
     private String description;
-    @ManyToMany()
-    @JoinTable(name = "users_role", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = { @JoinColumn(name = "users_id") })
-    private Set<Users> usersSet;
+//    @ManyToMany()
+//    @JoinTable(name = "users_role", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = { @JoinColumn(name = "users_id") })
+//    private Set<Users> usersSet;
 
     protected Role(){}
 
@@ -77,37 +78,37 @@ public class Role extends IdEntity {
         this.description = description;
     }
 
-    public Set<Users> getUsers() {
-        if(this.usersSet == null) {
-            this.usersSet = new HashSet<Users>();
-        }
-        return new HashSet<Users>(usersSet);
-    }
-
-    public boolean addUsers(Users users) {
-        if(users == null) {
-            throw new IllegalArgumentException("不能添加空的用户");
-        }
-        if(this.usersSet == null) {
-            this.usersSet = new HashSet<Users>();
-        }
-        return this.usersSet.add(users);
-    }
-
-    public boolean addUsers(Collection<Users> users) {
-        if(CollectionUtils.isEmpty(users)) {
-            return false;
-        }
-        return this.usersSet.addAll(users);
-    }
-
-    public boolean removeUsers(Users users) {
-        if(users == null) {
-            throw new IllegalArgumentException("不能删除空的用户");
-        }
-        if(this.usersSet == null) {
-            return false;
-        }
-        return this.usersSet.remove(users);
-    }
+//    public Set<Users> getUsers() {
+//        if(this.usersSet == null) {
+//            this.usersSet = new HashSet<Users>();
+//        }
+//        return new HashSet<Users>(usersSet);
+//    }
+//
+//    public boolean addUsers(Users users) {
+//        if(users == null) {
+//            throw new IllegalArgumentException("不能添加空的用户");
+//        }
+//        if(this.usersSet == null) {
+//            this.usersSet = new HashSet<Users>();
+//        }
+//        return this.usersSet.add(users);
+//    }
+//
+//    public boolean addUsers(Collection<Users> users) {
+//        if(CollectionUtils.isEmpty(users)) {
+//            return false;
+//        }
+//        return this.usersSet.addAll(users);
+//    }
+//
+//    public boolean removeUsers(Users users) {
+//        if(users == null) {
+//            throw new IllegalArgumentException("不能删除空的用户");
+//        }
+//        if(this.usersSet == null) {
+//            return false;
+//        }
+//        return this.usersSet.remove(users);
+//    }
 }

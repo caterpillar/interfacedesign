@@ -1,11 +1,10 @@
 package org.interfacedesign.core.domain.model.role;
 
 import org.apache.commons.lang3.StringUtils;
-import org.interfacedesign.core.domain.model.IdEntity;
+import org.interfacedesign.base.entity.LongIdEntity;
 import org.interfacedesign.core.domain.model.ResourceAddress;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,16 +14,24 @@ import javax.persistence.MappedSuperclass;
  * 实现业务需求
  */
 @MappedSuperclass
-public class TeamMember extends IdEntity {
-    @Column
+public class TeamMember extends LongIdEntity {
+    @AttributeOverrides({
+            @AttributeOverride(name = "firstName", column = @Column(name = "first_name")),
+            @AttributeOverride(name = "secondName", column = @Column(name = "second_name"))
+    }
+    )
+    @Embedded
     private PersonName name;
-    @Column
+    @Column(name = "mobile_phone")
     private String mobilePhone;
-    @Column
+    @Column(name = "email")
     private String email;
-    @Column
+    @Column(name = "nick_name")
     private String nickName;
-    @Column
+    @AttributeOverride(
+            name = "resourceLocation", column = @Column(name = "photograph")
+    )
+    @Embedded
     private ResourceAddress photograph;
 
     public TeamMember() {
@@ -35,7 +42,7 @@ public class TeamMember extends IdEntity {
         this.mobilePhone = mobilePhone;
         this.email = email;
         this.nickName = nickName;
-        if(StringUtils.isNoneEmpty(resourceAddress)) {
+        if (StringUtils.isNoneEmpty(resourceAddress)) {
             this.photograph = ResourceAddress.buildImageResourceAddress(resourceAddress);
         }
     }
@@ -57,6 +64,10 @@ public class TeamMember extends IdEntity {
     }
 
     public String getPhotograph() {
-        return this.photograph.toString();
+        if(photograph != null) {
+            return this.photograph.toString();
+        } else {
+            return null;
+        }
     }
 }

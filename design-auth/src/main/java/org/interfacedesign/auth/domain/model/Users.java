@@ -1,6 +1,7 @@
 package org.interfacedesign.auth.domain.model;
 
 import org.apache.commons.lang3.StringUtils;
+import org.interfacedesign.base.entity.LongIdEntity;
 import org.interfacedesign.base.util.MD5Util;
 import org.springframework.util.CollectionUtils;
 
@@ -16,7 +17,7 @@ import java.util.regex.Pattern;
  */
 @Entity
 @Table(name = "users")
-public class Users extends IdEntity {
+public class Users extends LongIdEntity {
     private static final Pattern USER_NAME_PATTERN = Pattern.compile("^[a-zA-Z]\\w{5,15}$");
     private static final String DEFAULT_PASSWORD = "111111";
     @Column(name = "name")

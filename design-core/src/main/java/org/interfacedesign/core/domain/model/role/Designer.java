@@ -1,10 +1,7 @@
 package org.interfacedesign.core.domain.model.role;
 
-import org.interfacedesign.core.domain.model.project.Interface;
-import org.interfacedesign.core.domain.model.project.InterfaceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,19 +11,15 @@ import javax.persistence.Entity;
  * 实现业务需求
  */
 @Entity
+@Table(name = "designer")
 public class Designer extends TeamMember {
-    @Autowired
-    private InterfaceRepository interfaceRepository;
 
     public Designer(){}
 
-    public Designer(String firstName, String lastName, String mobilePhone, String email, String nickName, String resourceAddress) {
-        super(firstName, lastName, mobilePhone, email, nickName, resourceAddress);
+    public Designer(String firstName, String lastName, String mobilePhone, String email, String nickName, String photograph) {
+        super(firstName, lastName, mobilePhone, email, nickName, photograph);
     }
 
-    public void addInterface(Interface interf) {
-        interfaceRepository.save(interf);
-    }
 
 
 }

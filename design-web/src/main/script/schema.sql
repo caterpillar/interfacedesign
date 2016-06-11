@@ -152,6 +152,19 @@ CREATE TABLE web_resource
 
 ALTER TABLE web_resource COMMENT '系统资源';
 
+/*==============================================================*/
+/* Table: designer                                           */
+/*==============================================================*/
+CREATE TABLE `designer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(50) NOT NULL COMMENT '设计者姓名',
+  `mobile_phone` varchar(20) NOT NULL COMMENT '移动电话号码',
+  `email` varchar(50) DEFAULT NULL COMMENT 'email地址',
+  `nick_name` varchar(50) DEFAULT NULL COMMENT '昵称',
+  `photograph` varchar(200) DEFAULT NULL COMMENT '照面uri',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='设计者';
+
 ALTER TABLE security_metadata ADD CONSTRAINT FK_security_metadata_Reference_role FOREIGN KEY (role_id)
 REFERENCES role (id)
   ON DELETE RESTRICT
@@ -216,3 +229,14 @@ FROM
   INNER JOIN groups ON g.groups_id = groups.id
   INNER JOIN groups_role ON groups.id = groups_role.groups_id
   INNER JOIN role ON groups_role.role_id = role.id;
+
+
+ALTER TABLE `interface_design`.`role` CHARACTER SET = utf8 , COLLATE = utf8_general_ci ;
+ALTER TABLE `interface_design`.`security_metadata` CHARACTER SET = utf8 , COLLATE = utf8_general_ci ;
+ALTER TABLE `interface_design`.`auth_user` CHARACTER SET = utf8 , COLLATE = utf8_general_ci ;
+ALTER TABLE `interface_design`.`groups` CHARACTER SET = utf8 , COLLATE = utf8_general_ci ;
+ALTER TABLE `interface_design`.`groups_role` CHARACTER SET = utf8 , COLLATE = utf8_general_ci ;
+ALTER TABLE `interface_design`.`users` CHARACTER SET = utf8 , COLLATE = utf8_general_ci ;
+ALTER TABLE `interface_design`.`users_groups` CHARACTER SET = utf8 , COLLATE = utf8_general_ci ;
+ALTER TABLE `interface_design`.`users_role` CHARACTER SET = utf8 , COLLATE = utf8_general_ci ;
+ALTER TABLE `interface_design`.`web_resource` CHARACTER SET = utf8 , COLLATE = utf8_general_ci ;

@@ -1,5 +1,7 @@
 package org.interfacedesign.core.domain.model.role;
 
+import javax.persistence.Embeddable;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Li Shaohua
@@ -7,25 +9,30 @@ package org.interfacedesign.core.domain.model.role;
  * Time: 15:41
  * 实现业务需求
  */
+@Embeddable
 public class PersonName {
-    private final String firstName;
-    private final String lastName;
+    private String firstName;
+    private String secondName;
 
-    public PersonName(String firstName, String lastName) {
+    public PersonName() {
+    }
+
+    public PersonName(String firstName, String secondName) {
         this.firstName = firstName;
-        this.lastName = lastName;
+        this.secondName = secondName;
     }
 
     @Override
     public String toString() {
-        return firstName() + lastName();
+        return firstName() + secondName();
     }
 
     public String firstName() {
         return this.firstName;
     }
 
-    public String lastName() {
-        return this.lastName;
+    public String secondName() {
+        return this.secondName;
     }
+
 }

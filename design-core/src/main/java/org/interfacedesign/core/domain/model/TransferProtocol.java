@@ -11,12 +11,12 @@ import java.util.List;
  * 实现业务需求
  */
 public enum TransferProtocol {
-    HTTP1("", "http"),
-    HTTP2("", "http"),
-    HTTPS("", "https"),
-    FTP("", "ftp"),
-    TCP("", "tcp"),
-    EMAIL("", "email");
+    HTTP1("http1", "http"),
+    HTTP2("http2", "http"),
+    HTTPS("https", "https"),
+    FTP("ftp", "ftp"),
+    TCP("tcp", "tcp"),
+    EMAIL("email", "email");
 
     private final static List<TransferProtocol> resourceProtocol = new ArrayList<TransferProtocol>()
     {
@@ -54,4 +54,7 @@ public enum TransferProtocol {
         return this.value;
     }
 
+    public static void main(String[] args) {
+        System.out.println(TransferProtocol.HTTP1);
+    }
 }

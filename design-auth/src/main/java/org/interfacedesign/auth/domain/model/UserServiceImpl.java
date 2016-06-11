@@ -82,7 +82,7 @@ public class UserServiceImpl implements UsersService {
             throw new IllegalArgumentException("需要添加用户的角色不存在");
         }
         List<Users> all = usersRepository.findAll(users);
-        roleByName.addUsers(all);
+//        roleByName.addUsers(all);
     }
 
     private void addRoleToUser(Users users, List<String> roles) {
