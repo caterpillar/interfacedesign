@@ -4,6 +4,8 @@ import org.interfacedesign.base.entity.LongIdEntity;
 import org.interfacedesign.core.domain.model.utils.MessageProtocol;
 import org.interfacedesign.core.domain.model.utils.TransferProtocol;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
@@ -16,30 +18,38 @@ import javax.persistence.MappedSuperclass;
  */
 @MappedSuperclass
 public class AbstractInterface extends LongIdEntity {
-    @Column(name = "name")
-    private String name;
+    @AttributeOverrides({
+            @AttributeOverride(name = "name", column = @Column(name = "name")),
+            @AttributeOverride(name = "description", column = @Column(name = "description"))
+    }
+    )
+    protected NameDescriptionEntity nameDescription;
     @Column(name = "description")
-    private String description;
-    @Column(name = "description")
-    private TransferProtocol transferProtocol;
+    protected TransferProtocol transferProtocol;
     @Column(name = "response_message_protocol")
-    private MessageProtocol responseMessageProtocol;
+    protected MessageProtocol responseMessageProtocol;
 
-
-    public String getName() {
-        return name;
+    public AbstractInterface() {
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public AbstractInterface(NameDescriptionEntity nameDescription, TransferProtocol transferProtocol, MessageProtocol responseMessageProtocol) {
+        this.nameDescription = nameDescription;
+        this.transferProtocol = transferProtocol;
+        this.responseMessageProtocol = responseMessageProtocol;
+    }
+
+    public String getName() {
+        if(this.nameDescription == null) {
+            throw new IllegalStateException("获得接口名称出错");
+        }
+        return this.nameDescription.getName();
     }
 
     public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+        if(this.nameDescription == null) {
+            throw new IllegalStateException("获得接口描述出错");
+        }
+        return this.nameDescription.getDescription();
     }
 
     public TransferProtocol getTransferProtocol() {

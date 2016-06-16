@@ -1,12 +1,12 @@
 package org.interfacedesign.core.domain.model.project;
 
+import org.interfacedesign.base.util.Assert;
 import org.interfacedesign.core.domain.model.utils.HttpMethod;
 import org.interfacedesign.core.domain.model.utils.MessageProtocol;
 import org.interfacedesign.core.domain.model.utils.TransferProtocol;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,10 +17,27 @@ import java.util.List;
 public class HttpInterface extends AbstractInterface {
     @Column(name = "http_method")
     private HttpMethod httpMethod;
-    private List<HttpParameter> httpParameterList;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "interface")
+    private List<HttpParameter> httpParameterList = new ArrayList<HttpParameter>();
 
     public HttpInterface() {
         super.setTransferProtocol(TransferProtocol.HTTP1);
+    }
+
+    public HttpInterface(NameDescriptionEntity nameDescription, TransferProtocol transferProtocol,
+                         MessageProtocol responseMessageProtocol, HttpMethod httpMethod) {
+        super(nameDescription, transferProtocol, responseMessageProtocol);
+        super.setTransferProtocol(TransferProtocol.HTTP1);
+        this.httpMethod = httpMethod;
+    }
+
+    public boolean addParameter(HttpParameter httpParameter) {
+        Assert.notNull(httpParameter, "不能添加空参数");
+        return httpParameterList.add(httpParameter);
+    }
+
+    public List<HttpParameter> getParameters() {
+        return new ArrayList<HttpParameter>(this.httpParameterList);
     }
 
     @Override

@@ -7,6 +7,17 @@ import org.apache.commons.lang3.StringUtils;
  */
 public abstract class Assert {
 
+
+    public static void notNull(Object obj) {
+        notNull(obj, "参数不能为空");
+    }
+
+    public static void notNull(Object obj, String message) {
+        if(obj == null) {
+            throw new IllegalArgumentException(message);
+        }
+    }
+
     public static void notEmpty(String value) {
         notEmpty(value, "参数不能为空");
     }
