@@ -1,6 +1,6 @@
 package org.interfacedesign.core.domain.value;
 
-import org.interfacedesign.core.domain.model.TransferProtocol;
+import org.interfacedesign.core.domain.model.utils.TransferProtocol;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

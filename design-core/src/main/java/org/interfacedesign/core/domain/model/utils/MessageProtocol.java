@@ -1,4 +1,4 @@
-package org.interfacedesign.core.domain.model.project;
+package org.interfacedesign.core.domain.model.utils;
 
 /**
  * Created with IntelliJ IDEA.

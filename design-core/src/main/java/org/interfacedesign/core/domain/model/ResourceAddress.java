@@ -2,6 +2,7 @@ package org.interfacedesign.core.domain.model;
 
 import org.apache.commons.lang3.StringUtils;
 import org.interfacedesign.base.util.Assert;
+import org.interfacedesign.core.domain.model.utils.TransferProtocol;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
