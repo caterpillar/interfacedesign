@@ -15,10 +15,11 @@ public class DataType {
     private String name;
     @Column(name = "description")
     private String description;
+    /** 是否是自定义类型 */
     @Column(name = "is_customer")
     private String isCustomer;
 
-    public DataType() {
+    protected DataType() {
     }
 
     public DataType(String name, String description, String isCustomer) {

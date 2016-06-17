@@ -20,6 +20,9 @@ public class HttpParameter extends LongIdEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="data_type")
     private DataType dataType;
 
+    private HttpInterface httpInterface;
+    
+
     public String getName() {
         if(this.nameDescription == null) {
             throw new IllegalStateException("获取参数名出错");

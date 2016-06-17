@@ -19,6 +19,10 @@ public class HttpInterface extends AbstractInterface {
     private HttpMethod httpMethod;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "interface")
     private List<HttpParameter> httpParameterList = new ArrayList<HttpParameter>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "interface")
+    private List<HttpHeaderValue> httpHeaderValueList;
+
+
 
     public HttpInterface() {
         super.setTransferProtocol(TransferProtocol.HTTP1);
