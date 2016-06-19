@@ -9,7 +9,8 @@ package org.interfacedesign.core.domain.model.utils;
  */
 public enum MessageProtocol {
     XML,
-    JSON
+    JSON,
+    HTML
 
 
 }

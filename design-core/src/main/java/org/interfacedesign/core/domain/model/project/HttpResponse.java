@@ -16,9 +16,13 @@ public class HttpResponse extends AbstractResponse {
     private HttpResponseStatus status;
     @OneToMany
     private Set<HttpResponseHeaderValue> responseHeaderValues;
-    @Lob
-    @Column(name = "response_body")
-    private String responseBody;
+    @OneToOne
+    @JoinColumn(name = "response_body_id")
+    private HttpResponseBody responseBody;
+    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    @JoinColumn(name = "http_interface_id")
+    private HttpInterface httpInterface;
+
 
 
 

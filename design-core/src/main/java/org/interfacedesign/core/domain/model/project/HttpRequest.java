@@ -12,6 +12,8 @@ import java.util.*;
 @Entity
 @Table(name = "http_request")
 public class HttpRequest extends AbstractRequest {
+    @Column(name = "request_url", length = 255)
+    private String requestUrl;
     @Enumerated(EnumType.STRING)
     @Column(name = "http_method", length = 10)
     private HttpMethod httpMethod;
@@ -19,6 +21,9 @@ public class HttpRequest extends AbstractRequest {
     private List<HttpParameter> httpParameters = new ArrayList<HttpParameter>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "httpRequest")
     private Set<HttpRequestHeaderValue> httpRequestHeaderValues = new HashSet<HttpRequestHeaderValue>();
+    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    @JoinColumn(name = "http_interface_id")
+    private HttpInterface httpInterface;
 
     public HttpRequest() {
     }
