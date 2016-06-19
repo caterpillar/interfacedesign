@@ -7,20 +7,23 @@ import javax.persistence.*;
 /**
  * Created by lishaohua on 16-6-13.
  */
-@Entity
-@Table(name = "http_parameter")
+@Entity(name = "http_parameter")
 public class HttpParameter extends LongIdEntity {
     @AttributeOverrides({
-            @AttributeOverride(name = "name", column = @Column(name = "name")),
-            @AttributeOverride(name = "description", column = @Column(name = "description"))
+            @AttributeOverride(name = "name", column = @Column(name = "name", length = 50, nullable = false)),
+            @AttributeOverride(name = "description", column = @Column(name = "description", length = 255))
     }
     )
     private NameDescriptionEntity nameDescription;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="data_type")
+    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER, optional = true)
+    @JoinColumn(name = "data_type", referencedColumnName = "name")
     private DataType dataType;
+    @Column(name = "value", length = 255)
+    private String value;
 
-    private HttpInterface httpInterface;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "http_request_id")
+    private HttpRequest httpRequest;
     
 
     public String getName() {
@@ -39,5 +42,9 @@ public class HttpParameter extends LongIdEntity {
 
     public DataType getDataType() {
         return dataType;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

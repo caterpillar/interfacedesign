@@ -16,17 +16,17 @@ import javax.persistence.*;
 @MappedSuperclass
 public class TeamMember extends LongIdEntity {
     @AttributeOverrides({
-            @AttributeOverride(name = "firstName", column = @Column(name = "first_name")),
-            @AttributeOverride(name = "secondName", column = @Column(name = "second_name"))
+            @AttributeOverride(name = "firstName", column = @Column(name = "first_name", length = 30)),
+            @AttributeOverride(name = "secondName", column = @Column(name = "second_name", length = 30))
     }
     )
     @Embedded
     private PersonName name;
-    @Column(name = "mobile_phone")
+    @Column(name = "mobile_phone", length = 20)
     private String mobilePhone;
-    @Column(name = "email")
+    @Column(name = "email", length = 50)
     private String email;
-    @Column(name = "nick_name")
+    @Column(name = "nick_name", length = 50)
     private String nickName;
     @AttributeOverride(
             name = "resourceLocation", column = @Column(name = "photograph")

@@ -90,7 +90,7 @@
 				<!-- <prop key="hibernate.connection.useUnicode">true</prop> -->
 				<!-- <prop key="hibernate.connection.characterEncoding">GB2312</prop> -->
 				<!-- <prop key="hibernate.jdbc.fetch_size">18</prop> -->
-				<!-- <prop key="hibernate.hbm2ddl.auto">create</prop> -->
+				 <prop key="hibernate.hbm2ddl.auto">create</prop>
 				<prop key="javax.persistence.validation.mode">none</prop>
 				<!-- 定义是否自动生成表，create表示每次加载都重新生成，update表示每次加载只是更新表 -->
 			</props>

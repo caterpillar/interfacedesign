@@ -4,10 +4,7 @@ import org.interfacedesign.base.entity.LongIdEntity;
 import org.interfacedesign.core.domain.model.utils.MessageProtocol;
 import org.interfacedesign.core.domain.model.utils.TransferProtocol;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,15 +16,20 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class AbstractInterface extends LongIdEntity {
     @AttributeOverrides({
-            @AttributeOverride(name = "name", column = @Column(name = "name")),
-            @AttributeOverride(name = "description", column = @Column(name = "description"))
+            @AttributeOverride(name = "name", column = @Column(name = "name", length = 50, nullable = false)),
+            @AttributeOverride(name = "description", column = @Column(name = "description", length = 255))
     }
     )
     protected NameDescriptionEntity nameDescription;
-    @Column(name = "description")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "transfer_protocol", length = 10)
     protected TransferProtocol transferProtocol;
-    @Column(name = "response_message_protocol")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "response_message_protocol", length = 10)
     protected MessageProtocol responseMessageProtocol;
+    @ManyToOne(optional = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "project_id")
+    protected Project project;
 
     public AbstractInterface() {
     }

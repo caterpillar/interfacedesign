@@ -2,21 +2,17 @@ package org.interfacedesign.core.domain.model.project;
 
 import org.interfacedesign.base.entity.LongIdEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
- * Created by lishaohua on 16-6-17.
+ * Created by lishaohua on 16-6-18.
  */
-@Entity
-@Table(name = "http_header_value")
-public class HttpHeaderValue extends LongIdEntity {
-    @Column
-    private HttpHeader httpHeader;
-    @Column
-    private String value;
-
-
+@MappedSuperclass
+public abstract class HttpHeaderValue extends LongIdEntity {
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "name", referencedColumnName = "name")
+    protected HttpHeader httpHeader;
+    @Column(name = "value", length = 255)
+    protected String value;
 
 }

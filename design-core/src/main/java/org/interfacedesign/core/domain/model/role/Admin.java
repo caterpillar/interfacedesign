@@ -1,5 +1,8 @@
 package org.interfacedesign.core.domain.model.role;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Li Shaohua
@@ -7,6 +10,8 @@ package org.interfacedesign.core.domain.model.role;
  * Time: 20:23
  * 实现业务需求
  */
+@Entity
+@Table(name = "admin")
 public class Admin extends TeamMember {
 
     public Admin(){

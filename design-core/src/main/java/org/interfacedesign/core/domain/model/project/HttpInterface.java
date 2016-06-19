@@ -15,40 +15,28 @@ import java.util.List;
 @Entity
 @Table(name = "http_interface")
 public class HttpInterface extends AbstractInterface {
-    @Column(name = "http_method")
-    private HttpMethod httpMethod;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "interface")
-    private List<HttpParameter> httpParameterList = new ArrayList<HttpParameter>();
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "interface")
-    private List<HttpHeaderValue> httpHeaderValueList;
+    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    @JoinColumn(name = "request_id")
+    private HttpRequest httpRequest;
+    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    @JoinColumn(name = "response_id")
+    private HttpResponse httpResponse;
 
 
 
     public HttpInterface() {
         super.setTransferProtocol(TransferProtocol.HTTP1);
+        super.setResponseMessageProtocol(MessageProtocol.JSON);
     }
 
     public HttpInterface(NameDescriptionEntity nameDescription, TransferProtocol transferProtocol,
                          MessageProtocol responseMessageProtocol, HttpMethod httpMethod) {
         super(nameDescription, transferProtocol, responseMessageProtocol);
         super.setTransferProtocol(TransferProtocol.HTTP1);
-        this.httpMethod = httpMethod;
+        httpRequest = new HttpRequest(httpMethod);
     }
 
-    public boolean addParameter(HttpParameter httpParameter) {
-        Assert.notNull(httpParameter, "不能添加空参数");
-        return httpParameterList.add(httpParameter);
-    }
 
-    public List<HttpParameter> getParameters() {
-        return new ArrayList<HttpParameter>(this.httpParameterList);
-    }
 
-    @Override
-    public void setResponseMessageProtocol(MessageProtocol responseMessageProtocol) {
-        if(responseMessageProtocol == null) {
-            responseMessageProtocol = MessageProtocol.JSON;
-        }
-        super.setResponseMessageProtocol(responseMessageProtocol);
-    }
+
 }

@@ -13,10 +13,10 @@ import javax.ws.rs.HttpMethod;
 @Table(name = "http_header")
 public class HttpHeader {
     @Id
-    @Column(name = "value")
+    @Column(name = "name", length = 50, nullable = false)
     private String name;
     /** header的默认值 */
-    @Column(name = "default_value")
+    @Column(name = "default_value", length = 255)
     private String defaultValue;
 
     protected HttpHeader() {
