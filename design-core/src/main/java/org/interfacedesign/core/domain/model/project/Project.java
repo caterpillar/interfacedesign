@@ -1,10 +1,11 @@
 package org.interfacedesign.core.domain.model.project;
 
-import org.apache.commons.lang3.StringUtils;
 import org.interfacedesign.base.entity.LongIdEntity;
 import org.interfacedesign.base.util.Assert;
+import org.interfacedesign.core.domain.model.design.entity.NameDescriptionEntity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,6 +23,8 @@ public class Project extends LongIdEntity {
     }
     )
     protected NameDescriptionEntity nameDescription;
+    @Column(name = "create_time")
+    protected Date createTime;
 
     public Project() {
         this.nameDescription = new NameDescriptionEntity();

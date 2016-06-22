@@ -1,7 +1,6 @@
 package org.interfacedesign.core.domain.model.role;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,6 +12,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "designer")
 public class Designer extends TeamMember {
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "admin_id")
+    private Admin admin;
 
     public Designer(){}
 
@@ -20,6 +22,10 @@ public class Designer extends TeamMember {
         super(firstName, lastName, mobilePhone, email, nickName, photograph);
     }
 
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
 
 
 }

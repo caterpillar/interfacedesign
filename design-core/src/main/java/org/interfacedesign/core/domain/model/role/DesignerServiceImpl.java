@@ -1,6 +1,5 @@
 package org.interfacedesign.core.domain.model.role;
 
-import org.interfacedesign.core.domain.model.role.repository.DesignerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

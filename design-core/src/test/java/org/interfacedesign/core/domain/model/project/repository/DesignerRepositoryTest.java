@@ -1,7 +1,7 @@
 package org.interfacedesign.core.domain.model.project.repository;
 
 import org.interfacedesign.core.domain.model.role.Designer;
-import org.interfacedesign.core.domain.model.role.repository.DesignerRepository;
+import org.interfacedesign.core.domain.model.role.DesignerRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

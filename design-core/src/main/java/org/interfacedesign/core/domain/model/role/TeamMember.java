@@ -5,6 +5,7 @@ import org.interfacedesign.base.entity.LongIdEntity;
 import org.interfacedesign.core.domain.model.ResourceAddress;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,6 +23,10 @@ public class TeamMember extends LongIdEntity {
     )
     @Embedded
     private PersonName name;
+    @Column(name = "user_id")
+    private Long userId;
+    @Column(name = "join_time")
+    private Date joinTime;
     @Column(name = "mobile_phone", length = 20)
     private String mobilePhone;
     @Column(name = "email", length = 50)
@@ -34,7 +39,8 @@ public class TeamMember extends LongIdEntity {
     @Embedded
     private ResourceAddress photograph;
 
-    public TeamMember() {
+
+    protected TeamMember() {
     }
 
     public TeamMember(String firstName, String lastName, String mobilePhone, String email, String nickName, String resourceAddress) {
