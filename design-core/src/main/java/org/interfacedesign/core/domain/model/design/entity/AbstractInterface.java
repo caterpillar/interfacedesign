@@ -41,11 +41,12 @@ public class AbstractInterface extends LongIdEntity {
     protected Set<DesignStage> designStages;
     @Column(name = "create_time")
     protected Date createTime;
-    @Embedded()
     @AttributeOverride(
-            name = "interfaceVersion", column = @Column(name = "interface_version")
+            name = "version", column = @Column(name = "interface_version", length = 7)
     )
     protected InterfaceVersion interfaceVersion;
+    @Column(name = "is_release")
+    protected Boolean isRelease;
 
     public AbstractInterface() {
     }

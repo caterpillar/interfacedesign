@@ -14,19 +14,26 @@ public class InterfaceVersion {
     private int snapshotVersion = 0;
     @Transient
     private int releaseVersion = 0;
+    private String version;
 
     public void increaseSnapshotVersion() {
         snapshotVersion++;
+        generateVersion();
     }
 
     public void increaseReleaseVersion() {
         releaseVersion++;
+        generateVersion();
     }
 
     public String getVersion() {
+        return this.version;
+    }
+
+    private void generateVersion() {
         StringBuilder builder = new StringBuilder();
         builder.append(snapshotVersion).append(VERSION_SEPARATOR).append(releaseVersion);
-        return builder.toString();
+        this.version = builder.toString();
     }
 
     public int getSnapshotVersion() {
