@@ -21,8 +21,6 @@ public class AdminTest {
     @Test
     public void testAddDesigner() throws Exception {
         Admin admin = new Admin("Steven", "Lee", "13062705747", "lishaohua@123.com", "hhlucky", "http:///");
-//        adminRepository.save(admin);
-//        Designer designer
         admin.addDesigner(new Designer("Steven", "Lee", "13062705747", "lishaohua@123.com", "hhlucky", "http:///"));
         admin.addDesigner(new Designer("Steven2", "Lee2", "13062705747", "lishaohua@123.com", "hhlucky", "http:///"));
         adminRepository.save(admin);

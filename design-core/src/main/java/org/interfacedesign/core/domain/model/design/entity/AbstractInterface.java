@@ -1,6 +1,7 @@
 package org.interfacedesign.core.domain.model.design.entity;
 
 import org.interfacedesign.base.entity.LongIdEntity;
+import org.interfacedesign.core.domain.model.design.value.InterfaceVersion;
 import org.interfacedesign.core.domain.model.project.Project;
 import org.interfacedesign.core.domain.model.utils.MessageProtocol;
 import org.interfacedesign.core.domain.model.utils.TransferProtocol;
@@ -40,6 +41,11 @@ public class AbstractInterface extends LongIdEntity {
     protected Set<DesignStage> designStages;
     @Column(name = "create_time")
     protected Date createTime;
+    @Embedded()
+    @AttributeOverride(
+            name = "interfaceVersion", column = @Column(name = "interface_version")
+    )
+    protected InterfaceVersion interfaceVersion;
 
     public AbstractInterface() {
     }
