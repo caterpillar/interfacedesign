@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity(name = "design_stage")
 public class DesignStage extends LongIdEntity {
     @Column(name = "begin_time")
-    private Date begainTime;
+    private Date beginTime;
     @Column(name = "end_time")
     private Date endTime;
     @OneToOne(cascade = CascadeType.ALL, optional = true)

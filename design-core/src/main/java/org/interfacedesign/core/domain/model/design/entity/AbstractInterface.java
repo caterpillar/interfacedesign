@@ -41,6 +41,8 @@ public class AbstractInterface extends LongIdEntity {
     protected Set<DesignStage> designStages;
     @Column(name = "create_time")
     protected Date createTime;
+    @Column(name = "last_modify_time")
+    protected Date lastModifyTime;
     @AttributeOverride(
             name = "version", column = @Column(name = "interface_version", length = 7)
     )

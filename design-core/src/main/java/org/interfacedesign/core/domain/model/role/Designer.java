@@ -15,6 +15,9 @@ public class Designer extends TeamMember {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "admin_id")
     private Admin admin;
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "team_id")
+    private Team team;
 
     public Designer(){}
 

@@ -18,12 +18,13 @@ import java.util.*;
 @Entity
 @Table(name = "admin")
 public class Admin extends TeamMember {
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "admin")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "admin")
     private Set<Designer> designers;
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "admin")
+    private Set<Team> teams;
     @Autowired
     @Transient
     private DesignerRepository designerRepository;
-
 
     protected Admin(){
 
@@ -52,6 +53,7 @@ public class Admin extends TeamMember {
             return false;
         }
         designerRepository.delete(designer);
+        return true;
     }
 
 
