@@ -39,6 +39,9 @@ public class Admin extends TeamMember {
 
     public Team buildTeam(String name, String description) {
         Team team = new Team(name, description, this);
+        if(teams == null) {
+            teams = new HashSet<Team>();
+        }
         this.teams.add(team);
         return team;
     }
@@ -49,10 +52,12 @@ public class Admin extends TeamMember {
     }
 
     public Collection<Designer> getDesigners() {
+        if (designers == null) return new ArrayList<Designer>();
         return new ArrayList<Designer>(designers);
     }
 
     public Collection<Team> getTeams() {
+        if (teams == null) return new ArrayList<Team>();
         return new ArrayList<Team>(teams);
     }
 

@@ -15,5 +15,6 @@ public interface TeamManageService {
     void addAdmin(Admin admin);
     Team createTeam(Long adminId, String teamName, String description);
     void assignTeam(Long designerId, Long teamId);
-    Collection<Designer> addDesignerToTeam(List<Long> designerIdList, Long teamId);
+    Collection<Designer> addDesignerToTeam(Collection<Long> designerIdList, Long teamId);
+    Collection<Designer> addDesignerToTeam(Collection<Designer> designers, Team team);
 }

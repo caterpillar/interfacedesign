@@ -8,6 +8,7 @@ import sun.security.krb5.internal.crypto.Des;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -28,15 +29,19 @@ public class Team extends LongIdEntity {
     protected Admin admin;
 
     public Team(String name, String description, Admin admin) {
+        this.nameDescription = new NameDescriptionEntity();
         setName(name);
         setAdmin(admin);
         setDescription(description);
     }
 
-    public void addDesigner(Designer designer) {
-        Validate.notNull(designer, "需要添加的设计人员为空");
-        this.designers.add(designer);
-    }
+//    public void addDesigner(Designer designer) {
+//        Validate.notNull(designer, "需要添加的设计人员为空");
+//        if(designers == null) {
+//            designers = new HashSet<Designer>();
+//        }
+//        this.designers.add(designer);
+//    }
 
     public String getName() {
         return nameDescription.getName();
@@ -47,6 +52,9 @@ public class Team extends LongIdEntity {
     }
 
     public Collection<Designer> getDesigners() {
+        if(designers == null) {
+            return new ArrayList<Designer>();
+        }
         return new ArrayList<Designer>(designers);
     }
 
@@ -67,5 +75,7 @@ public class Team extends LongIdEntity {
         Validate.notEmpty(name, "小组名称不能为空");
         this.nameDescription.setName(name);
     }
+
+    Team(){}
 
 }
