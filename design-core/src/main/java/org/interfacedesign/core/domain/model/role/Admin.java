@@ -1,5 +1,6 @@
 package org.interfacedesign.core.domain.model.role;
 
+import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -22,40 +23,50 @@ public class Admin extends TeamMember {
     private Set<Designer> designers;
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "admin")
     private Set<Team> teams;
-    @Autowired
-    @Transient
-    private DesignerRepository designerRepository;
 
-    protected Admin(){
-
-    }
-    public Admin(String firstName, String lastName, String mobilePhone, String email, String nickName, String resourceAddress) {
+    public Admin(String firstName, String lastName, String mobilePhone, String email, String nickName,
+                 String resourceAddress) {
         super(firstName, lastName, mobilePhone, email, nickName, resourceAddress);
     }
 
-    public Collection<Designer> getDesigners() {
-        return new ArrayList<Designer>(designers);
-    }
-
     public void addDesigner(Designer designer) {
-        if(CollectionUtils.isEmpty(designers)) {
+        if (CollectionUtils.isEmpty(designers)) {
             designers = new HashSet<Designer>();
         }
         designer.setAdmin(this);
         designers.add(designer);
     }
 
-    public boolean deleteDesigner(Designer designer) {
-        if(designer == null) {
-            return false;
-        }
-        if(CollectionUtils.isEmpty(designers)) {
-            return false;
-        }
-        designerRepository.delete(designer);
-        return true;
+    public Team buildTeam(String name, String description) {
+        Team team = new Team(name, description, this);
+        this.teams.add(team);
+        return team;
     }
 
+    public void assignTeam(Designer designer, Team team) {
+        Validate.notNull(designer, "所有分配的设计者不能为空");
+        designer.assignTeam(team);
+    }
 
+    public Collection<Designer> getDesigners() {
+        return new ArrayList<Designer>(designers);
+    }
+
+    public Collection<Team> getTeams() {
+        return new ArrayList<Team>(teams);
+    }
+
+    public boolean deleteDesigner(Designer designer) {
+        if (designer == null) {
+            return false;
+        }
+        if (CollectionUtils.isEmpty(designers)) {
+            return false;
+        }
+        return designers.remove(designer);
+    }
+
+    Admin() {
+    }
 
 }

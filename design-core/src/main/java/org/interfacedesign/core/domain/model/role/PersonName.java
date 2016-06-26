@@ -1,5 +1,7 @@
 package org.interfacedesign.core.domain.model.role;
 
+import org.apache.commons.lang3.Validate;
+
 import javax.persistence.Embeddable;
 
 /**
@@ -18,6 +20,7 @@ public class PersonName {
     }
 
     public PersonName(String firstName, String secondName) {
+        Validate.notEmpty(firstName, "个人姓名不能为空");
         this.firstName = firstName;
         this.secondName = secondName;
     }

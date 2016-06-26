@@ -39,10 +39,6 @@ public class TeamMember extends LongIdEntity {
     @Embedded
     private ResourceAddress photograph;
 
-
-    protected TeamMember() {
-    }
-
     public TeamMember(String firstName, String lastName, String mobilePhone, String email, String nickName, String resourceAddress) {
         this.name = new PersonName(firstName, lastName);
         this.mobilePhone = mobilePhone;
@@ -75,5 +71,9 @@ public class TeamMember extends LongIdEntity {
         } else {
             return null;
         }
+    }
+
+
+    TeamMember() {
     }
 }

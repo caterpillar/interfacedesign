@@ -20,7 +20,7 @@
           http://www.springframework.org/schema/data/jpa
           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
     
-    <context:component-scan base-package="org.interfacedesign.core.domain.model"/>
+    <context:component-scan base-package="org.interfacedesign.core"/>
 
     <!-- 配置Spring Data JPA扫描目录 -->
     <jpa:repositories base-package="org.interfacedesign.core.domain.model" />

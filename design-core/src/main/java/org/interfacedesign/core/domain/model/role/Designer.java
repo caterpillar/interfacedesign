@@ -1,5 +1,7 @@
 package org.interfacedesign.core.domain.model.role;
 
+import org.apache.commons.lang3.Validate;
+
 import javax.persistence.*;
 
 /**
@@ -25,10 +27,21 @@ public class Designer extends TeamMember {
         super(firstName, lastName, mobilePhone, email, nickName, photograph);
     }
 
+    public void assignTeam(Team team) {
+        Validate.notNull(team, "所分配小组不能为空");
+        this.team = team;
+    }
+
 
     public void setAdmin(Admin admin) {
         this.admin = admin;
     }
 
+    public Admin getAdmin() {
+        return admin;
+    }
 
+    public Team getTeam() {
+        return team;
+    }
 }

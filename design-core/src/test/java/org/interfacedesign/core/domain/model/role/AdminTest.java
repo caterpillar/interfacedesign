@@ -23,7 +23,7 @@ public class AdminTest {
     private AdminRepository adminRepository;
 
     @Test
-//    @Transactional
+    @Transactional
     public void testAddDesigner() throws Exception {
         Admin admin = new Admin("Steven", "Lee", "13062705747", "lishaohua@123.com", "hhlucky", "http:///");
         admin.addDesigner(new Designer("Steven", "Lee", "13062705747", "lishaohua@123.com", "hhlucky", "http:///"));
@@ -33,7 +33,7 @@ public class AdminTest {
     }
 
     @Test
-//    @Transactional
+    @Transactional
     public void testDeleteDesigner() throws Exception {
         Admin admin = new Admin("Steven", "Lee", "13062705747", "lishaohua@123.com", "hhlucky", "http:///");
         Designer designer = new Designer("Steven", "Lee", "13062705747", "lishaohua@123.com", "hhlucky", "http:///");
@@ -42,16 +42,5 @@ public class AdminTest {
         assertNotNull(designer.getId());
         assertNotNull(designer.getVersion());
         admin.deleteDesigner(designer);
-        adminRepository.save(admin);
-        adminRepository.save(admin);
-    }
-
-    @Test
-    @Transactional
-    public void testDeleteDesigner2() throws Exception {
-        Admin admin = adminRepository.findOne(1L);
-        Collection<Designer> designers = admin.getDesigners();
-        admin.deleteDesigner(designers.iterator().next());
-        adminRepository.delete(admin);
     }
 }
