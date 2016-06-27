@@ -105,6 +105,7 @@ public class TeamManageServiceTest {
     }
 
     @Test
+    @Transactional
     public void testTeam() {
         Admin admin = new Admin("李2", "少华2", "13062705748", "lishaohua@126.com", "华华", "http://");
         teamManageService.addAdmin(admin);
