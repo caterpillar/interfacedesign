@@ -1,5 +1,6 @@
 package org.interfacedesign.core.domain.model.design.entity;
 
+import org.apache.commons.lang3.Validate;
 import org.interfacedesign.base.entity.LongIdEntity;
 import org.interfacedesign.core.domain.model.design.value.InterfaceVersion;
 import org.interfacedesign.core.domain.model.project.Project;
@@ -20,7 +21,7 @@ import java.util.Set;
  */
 //@MappedSuperclass
 @Entity(name = "interface")
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class AbstractInterface extends LongIdEntity {
     @AttributeOverrides({
             @AttributeOverride(name = "name", column = @Column(name = "name", length = 50, nullable = false)),
@@ -53,21 +54,28 @@ public class AbstractInterface extends LongIdEntity {
     public AbstractInterface() {
     }
 
-    public AbstractInterface(NameDescriptionEntity nameDescription, TransferProtocol transferProtocol, MessageProtocol responseMessageProtocol) {
-        this.nameDescription = nameDescription;
-        this.transferProtocol = transferProtocol;
-        this.responseMessageProtocol = responseMessageProtocol;
+//    public AbstractInterface(NameDescriptionEntity nameDescription, TransferProtocol transferProtocol, MessageProtocol responseMessageProtocol) {
+//        this.nameDescription = nameDescription;
+//        this.transferProtocol = transferProtocol;
+//        this.responseMessageProtocol = responseMessageProtocol;
+//    }
+
+    public AbstractInterface(String name, String description,
+                             TransferProtocol transferProtocol, MessageProtocol responseMessageProtocol,
+                             Project project) {
+        
     }
 
+
     public String getName() {
-        if(this.nameDescription == null) {
+        if (this.nameDescription == null) {
             throw new IllegalStateException("获得接口名称出错");
         }
         return this.nameDescription.getName();
     }
 
     public String getDescription() {
-        if(this.nameDescription == null) {
+        if (this.nameDescription == null) {
             throw new IllegalStateException("获得接口描述出错");
         }
         return this.nameDescription.getDescription();
@@ -78,9 +86,7 @@ public class AbstractInterface extends LongIdEntity {
     }
 
     public void setTransferProtocol(TransferProtocol transferProtocol) {
-        if(transferProtocol == null) {
-            throw new IllegalArgumentException("Transfer Protocol can't be null");
-        }
+        Validate.notNull(transferProtocol, "接口传输协议不能为空");
         this.transferProtocol = transferProtocol;
     }
 
@@ -89,9 +95,7 @@ public class AbstractInterface extends LongIdEntity {
     }
 
     public void setResponseMessageProtocol(MessageProtocol responseMessageProtocol) {
-        if(responseMessageProtocol == null) {
-            throw new IllegalArgumentException("response message protocol can't be null");
-        }
+        Validate.notNull(responseMessageProtocol, "返回报文协议不能为空");
         this.responseMessageProtocol = responseMessageProtocol;
     }
 }

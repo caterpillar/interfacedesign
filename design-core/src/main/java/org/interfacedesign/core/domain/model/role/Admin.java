@@ -24,6 +24,8 @@ public class Admin extends TeamMember {
     private Set<Designer> designers;
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "admin")
     private Set<Team> teams;
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "creator")
+    private Set<Project> projects;
 
     public Admin(String firstName, String lastName, String mobilePhone, String email, String nickName,
                  String resourceAddress) {
@@ -48,7 +50,14 @@ public class Admin extends TeamMember {
     }
 
     public Project createProject(String name, String description) {
-        return new Project(name, description, this);
+        Project project = new Project(name, description, this);
+        for(Project pro : projects) {
+            if(project.getName().equals(pro.getName())) {
+                throw new IllegalArgumentException("该管理员已经存在相同名称的项目");
+            }
+        }
+        this.projects.add(project);
+        return project;
     }
 
     public void assignTeam(Designer designer, Team team) {
@@ -64,6 +73,11 @@ public class Admin extends TeamMember {
     public Collection<Team> getTeams() {
         if (teams == null) return new ArrayList<Team>();
         return new ArrayList<Team>(teams);
+    }
+
+    public Collection<Project> getMyProject() {
+        if(projects == null) return new ArrayList<Project>();
+        return new ArrayList<Project>(projects);
     }
 
     public boolean deleteDesigner(Designer designer) {

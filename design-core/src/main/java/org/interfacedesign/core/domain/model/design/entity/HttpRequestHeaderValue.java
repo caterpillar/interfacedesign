@@ -1,5 +1,8 @@
 package org.interfacedesign.core.domain.model.design.entity;
 
+import org.apache.commons.lang3.Validate;
+import org.interfacedesign.core.domain.model.design.value.HttpHeader;
+
 import javax.persistence.*;
 
 /**
@@ -12,5 +15,17 @@ public class HttpRequestHeaderValue extends HttpHeaderValue {
     @JoinColumn(name = "http_request_id")
     private HttpRequest httpRequest;
 
+
+    public HttpRequestHeaderValue(HttpHeader httpHeader, String value, HttpRequest httpRequest) {
+        super(httpHeader, value);
+        Validate.notNull(httpRequest);
+        this.httpRequest = httpRequest;
+    }
+
+    public HttpRequestHeaderValue(HttpRequest httpRequest) {
+        this.httpRequest = httpRequest;
+    }
+
+    HttpRequestHeaderValue(){}
 
 }

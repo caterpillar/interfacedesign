@@ -1,5 +1,6 @@
 package org.interfacedesign.core.domain.model.design.entity;
 
+import org.apache.commons.lang3.Validate;
 import org.interfacedesign.base.util.Assert;
 import org.interfacedesign.core.domain.model.utils.HttpMethod;
 
@@ -25,16 +26,45 @@ public class HttpRequest extends AbstractRequest {
     @JoinColumn(name = "http_interface_id")
     private HttpInterface httpInterface;
 
-    public HttpRequest() {
+    HttpRequest() {
     }
 
-    public HttpRequest(HttpMethod httpMethod) {
+    public HttpRequest(String requestUrl, HttpInterface httpInterface) {
+        this(requestUrl, HttpMethod.GET, httpInterface);
+    }
+
+    public HttpRequest(String requestUrl, HttpMethod httpMethod, HttpInterface httpInterface) {
+        setRequestUrl(requestUrl);
+        setHttpMethod(httpMethod);
+        setHttpInterface(httpInterface);
+    }
+
+    private void setHttpInterface(HttpInterface httpInterface) {
+        Validate.notNull(httpInterface);
+        this.httpInterface = httpInterface;
+    }
+
+    private void setHttpMethod(HttpMethod httpMethod) {
+        if(httpMethod == null) {
+            this.httpMethod = HttpMethod.GET;
+        }
         this.httpMethod = httpMethod;
     }
 
+    private void setRequestUrl(String requestUrl) {
+        Validate.notNull(requestUrl, "request url不能为空");
+        Assert.lengthNoGreater(requestUrl, 255, "request url长度不能大于255");
+        this.requestUrl = requestUrl;
+    }
+
     public boolean addParameter(HttpParameter httpParameter) {
-        Assert.notNull(httpParameter, "不能添加空参数");
+        Validate.notNull(httpParameter, "不能添加空参数");
         return httpParameters.add(httpParameter);
+    }
+
+    public boolean addHttpHeaderValue(HttpRequestHeaderValue httpRequestHeaderValue) {
+        Validate.notNull(httpRequestHeaderValue, "不能添加空的http header");
+        return httpRequestHeaderValues.add(httpRequestHeaderValue);
     }
 
     public Collection<HttpParameter> getParameters() {
@@ -42,11 +72,14 @@ public class HttpRequest extends AbstractRequest {
     }
 
     public boolean addHeaderValue(HttpRequestHeaderValue httpRequestHeaderValue) {
-        Assert.notNull(httpRequestHeaderValue, "");
+        Validate.notNull(httpRequestHeaderValue, "http请求头不能为空");
         return httpRequestHeaderValues.add(httpRequestHeaderValue);
     }
 
     public Collection<HttpRequestHeaderValue> getHeaderValues() {
-        return new HashSet<HttpRequestHeaderValue>(this.httpRequestHeaderValues);
+        if(httpRequestHeaderValues == null) {
+            new ArrayList<HttpRequestHeaderValue>();
+        }
+        return new ArrayList<HttpRequestHeaderValue>(this.httpRequestHeaderValues);
     }
 }

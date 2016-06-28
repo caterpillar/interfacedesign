@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -41,8 +42,10 @@ public class ProjectRepositoryTest {
 
     @Test
     public void tetFindMyProjectByName() {
-        admin.createProject("test project", "测试用项目");
-        final Collection<Project> myProjectByName = projectRepository.findMyProjectByName(admin.getId(), "test project");
+        Project project = admin.createProject("test project", "测试用项目");
+        projectRepository.save(project);
+        final List<Project> myProjectByName = projectRepository.findMyProjectByName("test project");
         assertNotNull(myProjectByName);
+        assertNotNull(myProjectByName.get(0));
     }
 }

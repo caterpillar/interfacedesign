@@ -20,19 +20,18 @@ public class HttpInterface extends AbstractInterface {
     @JoinColumn(name = "response_id")
     private HttpResponse httpResponse;
 
-
-
     public HttpInterface() {
         super.setTransferProtocol(TransferProtocol.HTTP1);
         super.setResponseMessageProtocol(MessageProtocol.JSON);
     }
 
     public HttpInterface(NameDescriptionEntity nameDescription, TransferProtocol transferProtocol,
-                         MessageProtocol responseMessageProtocol, HttpMethod httpMethod) {
+                         MessageProtocol responseMessageProtocol,) {
         super(nameDescription, transferProtocol, responseMessageProtocol);
         super.setTransferProtocol(TransferProtocol.HTTP1);
-        httpRequest = new HttpRequest(httpMethod);
+        httpRequest = new HttpRequest();
     }
+
 
 
 

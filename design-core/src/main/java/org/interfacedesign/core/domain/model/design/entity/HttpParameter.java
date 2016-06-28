@@ -1,6 +1,8 @@
 package org.interfacedesign.core.domain.model.design.entity;
 
+import org.apache.commons.lang3.Validate;
 import org.interfacedesign.base.entity.LongIdEntity;
+import org.interfacedesign.base.util.Assert;
 import org.interfacedesign.core.domain.model.design.value.DataType;
 
 import javax.persistence.*;
@@ -25,7 +27,36 @@ public class HttpParameter extends LongIdEntity {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "http_request_id")
     private HttpRequest httpRequest;
-    
+
+    public HttpParameter(String name, String description, DataType dataType, String value, HttpRequest httpRequest) {
+        setNameAndDescription(name, description);
+        setDateType(dataType);
+        setValue(value);
+        setHttpRequest(httpRequest);
+    }
+
+    private void setNameAndDescription(String name, String description) {
+        Validate.notNull(name, "参数名称不能为空");
+        Assert.lengthNoGreater(name, 50, "参数名称长度不能大于50");
+        Assert.lengthNoGreater(description, 255, "参数描述长度不能大于255");
+        this.nameDescription = new NameDescriptionEntity(name, description);
+    }
+
+    private void setDateType(DataType dataType) {
+        Validate.notNull(dataType, "参数数据类型不能为空");
+        this.dataType = dataType;
+    }
+
+    private void setValue(String value) {
+        Assert.lengthNoGreater(value, 255, "参数样例值长度不能大于255");
+        this.value = value;
+    }
+
+    private void setHttpRequest(HttpRequest httpRequest) {
+        Validate.notNull(httpRequest);
+        this.httpRequest = httpRequest;
+    }
+
 
     public String getName() {
         if(this.nameDescription == null) {
@@ -47,5 +78,9 @@ public class HttpParameter extends LongIdEntity {
 
     public String getValue() {
         return value;
+    }
+
+
+    HttpParameter() {
     }
 }

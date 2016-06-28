@@ -1,6 +1,8 @@
 package org.interfacedesign.core.domain.model.design.entity;
 
+import org.apache.commons.lang3.Validate;
 import org.interfacedesign.base.entity.LongIdEntity;
+import org.interfacedesign.base.util.Assert;
 import org.interfacedesign.core.domain.model.design.value.HttpHeader;
 
 import javax.persistence.*;
@@ -16,4 +18,12 @@ public abstract class HttpHeaderValue extends LongIdEntity {
     @Column(name = "value", length = 255)
     protected String value;
 
+    public HttpHeaderValue(HttpHeader httpHeader, String value) {
+        Validate.notNull(httpHeader);
+        this.httpHeader = httpHeader;
+        Assert.lengthNoGreater(value, 255, "http header 长度不能超过255");
+        this.value = value;
+    }
+
+    HttpHeaderValue(){}
 }

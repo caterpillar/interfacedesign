@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+
 /**
  * Created by lishaohua on 16-6-26.
  */
@@ -36,6 +38,16 @@ public class ProjectManageServiceImpl implements ProjectManageService {
         Validate.notNull(projectId, "要修改的项目id不能为null");
         Project project = projectRepository.findOne(projectId);
         Validate.notNull(project, "需要修改的项目不存在");
+        Admin admin = adminRepository.findOne(adminId);
+        Validate.notNull(admin, "管理员不存在");
+        if(!admin.getMyProject().contains(project)) {
+            throw new IllegalArgumentException("该项目不是自己的项目不能修改");
+        }
+        for(Project pro : admin.getMyProject()) {
+            if(!pro.equals(project) && pro.getName().equals(name)) {
+                throw new IllegalArgumentException("要修改的项目名称与已有的项目名称重复");
+            }
+        }
         if(StringUtils.isNotEmpty(name)) {
             project.setName(name);
         }

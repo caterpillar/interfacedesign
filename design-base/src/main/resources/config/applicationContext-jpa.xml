@@ -1,112 +1,120 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation=" http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+       xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation=" http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
 	        http://www.springframework.org/schema/data/jpa  http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd
+	        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
 	        http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
 
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="order" value="0" />
-		<property name="ignoreUnresolvablePlaceholders" value="true" />
-		<property name="ignoreResourceNotFound" value="true" />
-		<property name="locations">
-			<list>
-				<value>classpath:jdbc.xml</value>
-				<value>file:${catalina.home}/jdbc.xml</value>
-			</list>
-		</property>
-	</bean>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="order" value="0"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.xml</value>
+                <value>file:${catalina.home}/jdbc.xml</value>
+            </list>
+        </property>
+    </bean>
 
-	<bean id="dataSourceTarget" class="com.jolbox.bonecp.BoneCPDataSource"
-		destroy-method="close">
-		<!-- 数据库驱动 -->
-		<property name="driverClass" value="${BoneCP.driverClass}" />
-		<!-- 相应驱动的jdbcUrl,你懂的 -->
-		<property name="jdbcUrl" value="${BoneCP.jdbcUrl}" />
-		<!-- 数据库的用户名 -->
-		<property name="username" value="${BoneCP.username}" />
-		<!-- 数据库的密码 -->
-		<property name="password" value="${BoneCP.password}" />
-		<!-- 每个分区最大的连接数 -->
-		<property name="maxConnectionsPerPartition" value="${BoneCP.maxConnectionsPerPartition}" />
-		<!-- 每个分区最小的连接数 -->
-		<property name="minConnectionsPerPartition" value="${BoneCP.minConnectionsPerPartition}" />
-		<!-- 分区数 ，默认值2，最小1，推荐3-4，视应用而定 -->
-		<property name="partitionCount" value="${BoneCP.partitionCount}" />
-		<!-- 每次去拿数据库连接的时候一次性要拿几个,默认值：2 -->
-		<property name="acquireIncrement" value="${BoneCP.acquireIncrement}" />
-		<!-- 缓存prepared statements的大小，默认值：0 -->
-		<property name="statementsCacheSize" value="${BoneCP.statementsCacheSize}" />
-		<!-- 数据库在获取连接时使用的验证sql -->
-		<property name="initSQL" value="${BoneCP.initSQL}" />
-		<!-- 打印SQL -->
-		<property name="logStatementsEnabled" value="${BoneCP.logStatementsEnabled}" />
-	</bean>
+    <bean id="dataSourceTarget" class="com.jolbox.bonecp.BoneCPDataSource"
+          destroy-method="close">
+        <!-- 数据库驱动 -->
+        <property name="driverClass" value="${BoneCP.driverClass}"/>
+        <!-- 相应驱动的jdbcUrl,你懂的 -->
+        <property name="jdbcUrl" value="${BoneCP.jdbcUrl}"/>
+        <!-- 数据库的用户名 -->
+        <property name="username" value="${BoneCP.username}"/>
+        <!-- 数据库的密码 -->
+        <property name="password" value="${BoneCP.password}"/>
+        <!-- 每个分区最大的连接数 -->
+        <property name="maxConnectionsPerPartition" value="${BoneCP.maxConnectionsPerPartition}"/>
+        <!-- 每个分区最小的连接数 -->
+        <property name="minConnectionsPerPartition" value="${BoneCP.minConnectionsPerPartition}"/>
+        <!-- 分区数 ，默认值2，最小1，推荐3-4，视应用而定 -->
+        <property name="partitionCount" value="${BoneCP.partitionCount}"/>
+        <!-- 每次去拿数据库连接的时候一次性要拿几个,默认值：2 -->
+        <property name="acquireIncrement" value="${BoneCP.acquireIncrement}"/>
+        <!-- 缓存prepared statements的大小，默认值：0 -->
+        <property name="statementsCacheSize" value="${BoneCP.statementsCacheSize}"/>
+        <!-- 数据库在获取连接时使用的验证sql -->
+        <property name="initSQL" value="${BoneCP.initSQL}"/>
+        <!-- 打印SQL -->
+        <property name="logStatementsEnabled" value="${BoneCP.logStatementsEnabled}"/>
+    </bean>
 
 
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
-		<property name="targetDataSource" ref="dataSourceTarget">
-			<!--<ref local="dataSourceTarget" />-->
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
+        <property name="targetDataSource" ref="dataSourceTarget">
+            <!--<ref local="dataSourceTarget" />-->
 
-		</property>
-	</bean>
+        </property>
+    </bean>
 
-	<!-- JPA Entity Manager Factory -->
+    <!-- JPA Entity Manager Factory -->
 
-	<bean id="entityManagerFactory"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-		p:dataSource-ref="dataSource">
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          p:dataSource-ref="dataSource">
 
-		<property name="packagesToScan" value="org.interfacedesign.*" /> <!--如果删除了persistence.xml，则需要指定实体所在的路径否则会报找不到该文件 -->
+        <property name="packagesToScan" value="org.interfacedesign.*"/>
+        <!--如果删除了persistence.xml，则需要指定实体所在的路径否则会报找不到该文件 -->
 
-		<property name="jpaDialect">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
-		</property>
+        <property name="jpaDialect">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+        </property>
 
-		<property name="loadTimeWeaver">
-			<bean
-				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
-		</property>
+        <property name="loadTimeWeaver">
+            <bean
+                    class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
+        </property>
 
-		<property name="persistenceProvider">
-			<bean class="org.hibernate.ejb.HibernatePersistence" /><!-- 用于指定持久化实现厂商类 -->
-		</property>
-		<!-- <property name="jpaVendorAdapter"> <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean> 
-			</property> -->
+        <property name="persistenceProvider">
+            <bean class="org.hibernate.ejb.HibernatePersistence"/>
+            <!-- 用于指定持久化实现厂商类 -->
+        </property>
+        <!-- <property name="jpaVendorAdapter"> <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean>
+            </property> -->
 
-		<property name="jpaProperties">
-			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.format_sql">true</prop>
-				<prop key="hibernate.max_fetch_depth">3</prop>
-				<prop key="hibernate.jdbc.batch_size">10</prop>
-				<!-- 如果开启, Hibernate将在SQL中生成有助于调试的注释信息, 默认值为false -->
-				<!--<prop key="hibernate.use_sql_comments">true</prop>-->
-				<!--允许被缓存的JDBC连接开启自动提交(autocommit) -->
-				<!--<prop key="hibernate.connection.autocommit">false</prop> -->
-				<!--<prop key="hibernate.connection.useUnicode">true</prop> -->
-				<!--<prop key="hibernate.connection.characterEncoding">GB2312</prop> -->
-				<!--<prop key="hibernate.jdbc.fetch_size">18</prop> -->
-				 <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
-				<prop key="javax.persistence.validation.mode">none</prop>
-				<!-- 定义是否自动生成表，create表示每次加载都重新生成，update表示每次加载只是更新表
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.max_fetch_depth">3</prop>
+                <prop key="hibernate.jdbc.batch_size">10</prop>
+                <!-- 如果开启, Hibernate将在SQL中生成有助于调试的注释信息, 默认值为false -->
+                <!--<prop key="hibernate.use_sql_comments">true</prop>-->
+                <!--允许被缓存的JDBC连接开启自动提交(autocommit) -->
+                <!--<prop key="hibernate.connection.autocommit">false</prop> -->
+                <!--<prop key="hibernate.connection.useUnicode">true</prop> -->
+                <!--<prop key="hibernate.connection.characterEncoding">GB2312</prop> -->
+                <!--<prop key="hibernate.jdbc.fetch_size">18</prop> -->
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
+                <prop key="javax.persistence.validation.mode">none</prop>
+                <!-- 定义是否自动生成表，create表示每次加载都重新生成，update表示每次加载只是更新表
 
   -->
-			</props>
-		</property>
+            </props>
+        </property>
 
-	</bean>
+    </bean>
 
-	<!-- 配置事务管理器 -->
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
 
-	<!-- 使用注解方式定义事务 -->
-	<tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager" />
+    <jdbc:initialize-database ignore-failures="ALL">
+        <jdbc:script location="classpath:database_init.sql" />
+    </jdbc:initialize-database>
+
+    <!-- 使用注解方式定义事务 -->
+    <tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager"/>
 
 
 </beans>
