@@ -1,8 +1,10 @@
 package org.interfacedesign.core.domain.model.project;
 
+import org.apache.commons.lang3.Validate;
 import org.interfacedesign.base.entity.LongIdEntity;
 import org.interfacedesign.base.util.Assert;
 import org.interfacedesign.core.domain.model.design.entity.NameDescriptionEntity;
+import org.interfacedesign.core.domain.model.role.Admin;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,24 +27,37 @@ public class Project extends LongIdEntity {
     protected NameDescriptionEntity nameDescription;
     @Column(name = "create_time")
     protected Date createTime;
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "create_admin_id")
+    protected Admin creator;
+
+
 
     public Project() {
         this.nameDescription = new NameDescriptionEntity();
     }
 
-    public Project(String name, String description) {
+    public Project(String name, String description, Admin creator) {
         this();
+        this.nameDescription = new NameDescriptionEntity();
         setName(name);
         setDescription(description);
+        setCreator(creator);
+        this.createTime = new Date();
     }
 
-    void setName(String name) {
+    private void setCreator(Admin creator) {
+        Validate.notNull(creator, "创建人（admin）id不能为空");
+        this.creator = creator;
+    }
+
+    public void setName(String name) {
         Assert.notEmpty(name, "项目名称不能为空");
         Assert.lengthNoGreater(name, 50, "项目名称不能超过50个字符长度");
         this.nameDescription.setName(name);
     }
 
-    void setDescription(String description) {
+    public void setDescription(String description) {
         Assert.notEmpty(description, "项目描述不能为空");
         Assert.lengthNoGreater(description, 300, "项目描述不能超过300个字符长度");
         this.nameDescription.setDescription(description);

@@ -1,6 +1,7 @@
 package org.interfacedesign.core.domain.model.role;
 
 import org.apache.commons.lang3.Validate;
+import org.interfacedesign.core.domain.model.project.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -44,6 +45,10 @@ public class Admin extends TeamMember {
         }
         this.teams.add(team);
         return team;
+    }
+
+    public Project createProject(String name, String description) {
+        return new Project(name, description, this);
     }
 
     public void assignTeam(Designer designer, Team team) {
