@@ -27,7 +27,29 @@ public class HttpInterface extends AbstractInterface {
         super.setResponseMessageProtocol(MessageProtocol.JSON);
     }
 
-    public HttpInterface(String name, String description, TransferProtocol transferProtocol, MessageProtocol responseMessageProtocol, Project project) {
+    public HttpInterface(String name, String description, String requestUrl, Project project) {
+        this(name, description, requestUrl, TransferProtocol.HTTP1, MessageProtocol.JSON, project);
+    }
+
+    public HttpInterface(String name, String description, String requestUrl, TransferProtocol transferProtocol, MessageProtocol responseMessageProtocol, Project project) {
         super(name, description, transferProtocol, responseMessageProtocol, project);
+        this.httpRequest = new HttpRequest(requestUrl, this);
+        this.httpResponse = new HttpResponse(this);
+    }
+
+    public void modifyRequestUrl(String url) {
+        this.httpRequest.setRequestUrl(url);
+    }
+
+    public void modifRequestMethod(HttpMethod httpMethod) {
+        this.httpRequest.setHttpMethod(httpMethod);
+    }
+
+    public void addRequestParameter(HttpParameter httpParameter) {
+        this.httpRequest.addParameter(httpParameter);
+    }
+
+    public void addRequestHeaderValue(HttpRequestHeaderValue httpRequestHeaderValue) {
+        this.httpRequest.addHttpHeaderValue(httpRequestHeaderValue);
     }
 }

@@ -1,8 +1,10 @@
 package org.interfacedesign.core.domain.model.design.entity;
 
+import org.apache.commons.lang3.Validate;
 import org.interfacedesign.core.domain.model.utils.HttpResponseStatus;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -15,7 +17,7 @@ public class HttpResponse extends AbstractResponse {
     @Column(name = "status", length = 5, nullable = false)
     private HttpResponseStatus status;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "httpResponse")
-    private Set<HttpResponseHeaderValue> responseHeaderValues;
+    private Set<HttpResponseHeaderValue> responseHeaderValues = new HashSet<HttpResponseHeaderValue>();
     @OneToOne
     @JoinColumn(name = "response_body_id")
     private HttpResponseBody responseBody;
@@ -23,9 +25,31 @@ public class HttpResponse extends AbstractResponse {
     @JoinColumn(name = "http_interface_id")
     private HttpInterface httpInterface;
 
+    public HttpResponse(HttpInterface httpInterface) {
+        this(HttpResponseStatus.OK, null, httpInterface);
+    }
 
+    public HttpResponse(HttpResponseStatus status,
+                        HttpResponseBody responseBody, HttpInterface httpInterface) {
+        setHttpResponseStatus(status);
+        setResponseBody(responseBody);
+        setHttpInterface(httpInterface);
+    }
 
+    void setResponseBody(HttpResponseBody responseBody) {
+        this.responseBody = responseBody;
+    }
 
+    void setHttpInterface(HttpInterface httpInterface) {
+        Validate.notNull(httpInterface);
+        this.httpInterface = httpInterface;
+    }
 
+    void setHttpResponseStatus(HttpResponseStatus status) {
+        Validate.notNull(status);
+        this.status = status;
+    }
 
+    HttpResponse() {
+    }
 }

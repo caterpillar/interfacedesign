@@ -55,12 +55,6 @@ public class AbstractInterface extends LongIdEntity {
     public AbstractInterface() {
     }
 
-//    public AbstractInterface(NameDescriptionEntity nameDescription, TransferProtocol transferProtocol, MessageProtocol responseMessageProtocol) {
-//        this.nameDescription = nameDescription;
-//        this.transferProtocol = transferProtocol;
-//        this.responseMessageProtocol = responseMessageProtocol;
-//    }
-
     public AbstractInterface(String name, String description,
                              TransferProtocol transferProtocol, MessageProtocol responseMessageProtocol,
                              Project project) {
