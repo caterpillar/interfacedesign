@@ -1,5 +1,6 @@
 package org.interfacedesign.core.domain.model.project.repository;
 
+import org.interfacedesign.core.application.role.BaseAdminInitTest;
 import org.interfacedesign.core.application.role.TeamManageService;
 import org.interfacedesign.core.domain.model.project.Project;
 import org.interfacedesign.core.domain.model.project.ProjectRepository;
@@ -21,26 +22,13 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created by lishaohua on 16-6-10.
  */
-@ContextConfiguration(
-        locations = {"classpath:config/applicationContext-jpa.xml", "classpath:config/applicationContext-beans.xml"})
-@RunWith(SpringJUnit4ClassRunner.class)
-public class ProjectRepositoryTest {
+public class ProjectRepositoryTest extends BaseAdminInitTest {
     @Autowired
     private ProjectRepository projectRepository;
-    @Autowired
-    private TeamManageService teamManageService;
-
-    private Admin admin;
-
-    @Before
-    public void setUp() {
-        Admin admin = new Admin("Steven", "Lee", "13062705747", "111@mail.com", "", "");
-        teamManageService.addAdmin(admin);
-        this.admin = admin;
-    }
 
 
     @Test
+    @Transactional
     public void tetFindMyProjectByName() {
         Project project = admin.createProject("test project", "测试用项目");
         projectRepository.save(project);

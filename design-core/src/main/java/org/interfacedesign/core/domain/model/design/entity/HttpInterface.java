@@ -1,5 +1,6 @@
 package org.interfacedesign.core.domain.model.design.entity;
 
+import org.interfacedesign.core.domain.model.project.Project;
 import org.interfacedesign.core.domain.model.utils.HttpMethod;
 import org.interfacedesign.core.domain.model.utils.MessageProtocol;
 import org.interfacedesign.core.domain.model.utils.TransferProtocol;
@@ -20,20 +21,13 @@ public class HttpInterface extends AbstractInterface {
     @JoinColumn(name = "response_id")
     private HttpResponse httpResponse;
 
-    public HttpInterface() {
+
+    HttpInterface() {
         super.setTransferProtocol(TransferProtocol.HTTP1);
         super.setResponseMessageProtocol(MessageProtocol.JSON);
     }
 
-    public HttpInterface(NameDescriptionEntity nameDescription, TransferProtocol transferProtocol,
-                         MessageProtocol responseMessageProtocol,) {
-        super(nameDescription, transferProtocol, responseMessageProtocol);
-        super.setTransferProtocol(TransferProtocol.HTTP1);
-        httpRequest = new HttpRequest();
+    public HttpInterface(String name, String description, TransferProtocol transferProtocol, MessageProtocol responseMessageProtocol, Project project) {
+        super(name, description, transferProtocol, responseMessageProtocol, project);
     }
-
-
-
-
-
 }

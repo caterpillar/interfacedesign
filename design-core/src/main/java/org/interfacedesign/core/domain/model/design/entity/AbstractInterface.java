@@ -2,6 +2,7 @@ package org.interfacedesign.core.domain.model.design.entity;
 
 import org.apache.commons.lang3.Validate;
 import org.interfacedesign.base.entity.LongIdEntity;
+import org.interfacedesign.base.util.Assert;
 import org.interfacedesign.core.domain.model.design.value.InterfaceVersion;
 import org.interfacedesign.core.domain.model.project.Project;
 import org.interfacedesign.core.domain.model.utils.MessageProtocol;
@@ -63,7 +64,23 @@ public class AbstractInterface extends LongIdEntity {
     public AbstractInterface(String name, String description,
                              TransferProtocol transferProtocol, MessageProtocol responseMessageProtocol,
                              Project project) {
-        
+        setNameAndDescription(name, description);
+        Validate.notNull(transferProtocol);
+        setTransferProtocol(transferProtocol);
+        setResponseMessageProtocol(responseMessageProtocol);
+        setProject(project);
+    }
+
+    private void setProject(Project project) {
+        Validate.notNull(project);
+        this.project = project;
+    }
+
+    private void setNameAndDescription(String name, String description) {
+        Validate.notNull(name, "接口名称不能为空");
+        Assert.lengthNoGreater(name, 50, "接口名称长度不能大于50个字符");
+        Assert.lengthNoGreater(description, 255, "接口描述长度不能大于255个字符");
+        this.nameDescription = new NameDescriptionEntity(name, description);
     }
 
 

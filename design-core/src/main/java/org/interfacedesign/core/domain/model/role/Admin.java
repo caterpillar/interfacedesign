@@ -42,7 +42,7 @@ public class Admin extends TeamMember {
 
     public Team buildTeam(String name, String description) {
         Team team = new Team(name, description, this);
-        if(teams == null) {
+        if (teams == null) {
             teams = new HashSet<Team>();
         }
         this.teams.add(team);
@@ -50,14 +50,18 @@ public class Admin extends TeamMember {
     }
 
     public Project createProject(String name, String description) {
-        Project project = new Project(name, description, this);
-        for(Project pro : projects) {
-            if(project.getName().equals(pro.getName())) {
-                throw new IllegalArgumentException("该管理员已经存在相同名称的项目");
+        Project toCreateProject = new Project(name, description, this);
+        if (!CollectionUtils.isEmpty(projects)) {
+            for (Project pro : projects) {
+                if (toCreateProject.getName().equals(pro.getName())) {
+                    throw new IllegalArgumentException("该管理员已经存在相同名称的项目");
+                }
             }
+        } else {
+            projects = new HashSet<Project>();
         }
-        this.projects.add(project);
-        return project;
+        this.projects.add(toCreateProject);
+        return toCreateProject;
     }
 
     public void assignTeam(Designer designer, Team team) {
@@ -76,7 +80,7 @@ public class Admin extends TeamMember {
     }
 
     public Collection<Project> getMyProject() {
-        if(projects == null) return new ArrayList<Project>();
+        if (projects == null) return new ArrayList<Project>();
         return new ArrayList<Project>(projects);
     }
 
