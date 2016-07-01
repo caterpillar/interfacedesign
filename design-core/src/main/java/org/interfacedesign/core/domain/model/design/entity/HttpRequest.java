@@ -39,6 +39,10 @@ public class HttpRequest extends AbstractRequest {
         setHttpInterface(httpInterface);
     }
 
+    public String getRequestUrl() {
+        return requestUrl;
+    }
+
     private void setHttpInterface(HttpInterface httpInterface) {
         Validate.notNull(httpInterface);
         this.httpInterface = httpInterface;

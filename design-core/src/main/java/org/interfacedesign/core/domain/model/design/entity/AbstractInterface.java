@@ -1,10 +1,12 @@
 package org.interfacedesign.core.domain.model.design.entity;
 
 import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.time.DateUtils;
 import org.interfacedesign.base.entity.LongIdEntity;
 import org.interfacedesign.base.util.Assert;
 import org.interfacedesign.core.domain.model.design.value.InterfaceVersion;
 import org.interfacedesign.core.domain.model.project.Project;
+import org.interfacedesign.core.domain.model.role.Designer;
 import org.interfacedesign.core.domain.model.utils.MessageProtocol;
 import org.interfacedesign.core.domain.model.utils.TransferProtocol;
 
@@ -12,6 +14,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created with IntelliJ IDEA.
@@ -63,6 +66,17 @@ public class AbstractInterface extends LongIdEntity {
         setTransferProtocol(transferProtocol);
         setResponseMessageProtocol(responseMessageProtocol);
         setProject(project);
+        createTime = new Date();
+        isRelease = Boolean.FALSE;
+        interfaceVersion = new InterfaceVersion();
+    }
+
+    public void startDesignStage(Designer designer) {
+        if (designStages == null) {
+            designStages = new TreeSet<DesignStage>();
+        }
+        DesignStage designStage = new DesignStage(this, designer);
+        designStages.add(designStage);
     }
 
     private void setProject(Project project) {

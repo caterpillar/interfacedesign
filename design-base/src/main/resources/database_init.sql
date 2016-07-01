@@ -18,7 +18,8 @@ insert
 
 insert
     into
-        admin
+        designer
         (id, version, email, join_time, mobile_phone, first_name, second_name, nick_name, photograph, user_id)
     values
-        (2, 1, 'first_user@126.com', now(), '13000000001', '第', '一个', '设计员', '', 2);
+        (1, 1, 'first_user@126.com', now(), '13000000001', '第', '一个', '设计员', '', 2);
+

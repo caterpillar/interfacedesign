@@ -21,7 +21,7 @@ public class ResourceAddress {
     private String resourceRoot;
     private String resourceLocation;
 
-    private static final ResourceRoot IMAGE_RESOURCE = new ResourceRoot(TransferProtocol.HTTP1, "127.0.0.1", 8000, "helloworld");
+    private static final ResourceRoot IMAGE_RESOURCE = new ResourceRoot(TransferProtocol.HTTP, "127.0.0.1", 8000, "helloworld");
 
     public ResourceAddress() {
     }

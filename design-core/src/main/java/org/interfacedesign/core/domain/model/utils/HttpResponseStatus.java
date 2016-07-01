@@ -289,7 +289,7 @@ public enum HttpResponseStatus {
      */
     @Override
     public String toString() {
-        return reason;
+        return String.valueOf(code);
     }
 
     /**
@@ -305,6 +305,15 @@ public enum HttpResponseStatus {
             }
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        HttpResponseStatus ok = HttpResponseStatus.OK;
+        System.out.println(ok.toString());
+        System.out.println(ok.code);
+        System.out.println(ok.family);
+        System.out.println(ok.getFamily());
+        System.out.println(ok.getValue());
     }
 
 }

@@ -10,14 +10,13 @@ public class TransferProtocolTest {
 
     @Test
     public void testIsResourceProtocol() throws Exception {
-        assertTrue(TransferProtocol.HTTP1.isResourceProtocol());
-        assertTrue(TransferProtocol.HTTP2.isResourceProtocol());
+        assertTrue(TransferProtocol.HTTP.isResourceProtocol());
         assertTrue(TransferProtocol.HTTPS.isResourceProtocol());
         assertTrue(TransferProtocol.FTP.isResourceProtocol());
     }
 
     @Test
     public void testGetValue() throws Exception {
-        assertEquals("http", TransferProtocol.HTTP1.getValue());
+        assertEquals("http", TransferProtocol.HTTP.getValue());
     }
 }

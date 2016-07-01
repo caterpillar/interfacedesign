@@ -1,10 +1,8 @@
 package org.interfacedesign.core.application.design.impl;
 
-import org.interfacedesign.core.BaseTest;
+import org.interfacedesign.core.BaseRolesInitTest;
 import org.interfacedesign.core.application.design.ProjectManageService;
-import org.interfacedesign.core.application.role.BaseAdminInitTest;
 import org.interfacedesign.core.domain.model.project.Project;
-import org.interfacedesign.core.domain.model.role.Admin;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +12,7 @@ import static org.junit.Assert.*;
 /**
  * Created by lishaohua on 16-6-28.
  */
-public class ProjectManageServiceImplTest extends BaseAdminInitTest {
+public class ProjectManageServiceImplTest extends BaseRolesInitTest {
     @Autowired
     private ProjectManageService projectManageService;
 

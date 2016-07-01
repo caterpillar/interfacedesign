@@ -6,6 +6,7 @@ import org.interfacedesign.core.domain.model.utils.MessageProtocol;
 import org.interfacedesign.core.domain.model.utils.TransferProtocol;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by lishaohua on 16-6-13.
@@ -23,18 +24,27 @@ public class HttpInterface extends AbstractInterface {
 
 
     HttpInterface() {
-        super.setTransferProtocol(TransferProtocol.HTTP1);
+        super.setTransferProtocol(TransferProtocol.HTTP);
         super.setResponseMessageProtocol(MessageProtocol.JSON);
     }
 
     public HttpInterface(String name, String description, String requestUrl, Project project) {
-        this(name, description, requestUrl, TransferProtocol.HTTP1, MessageProtocol.JSON, project);
+        this(name, description, requestUrl, TransferProtocol.HTTP, MessageProtocol.JSON, project);
     }
 
     public HttpInterface(String name, String description, String requestUrl, TransferProtocol transferProtocol, MessageProtocol responseMessageProtocol, Project project) {
         super(name, description, transferProtocol, responseMessageProtocol, project);
+        this.lastModifyTime = new Date();
         this.httpRequest = new HttpRequest(requestUrl, this);
         this.httpResponse = new HttpResponse(this);
+    }
+
+    public HttpRequest getHttpRequest() {
+        return httpRequest;
+    }
+
+    public HttpResponse getHttpResponse() {
+        return httpResponse;
     }
 
     public void modifyRequestUrl(String url) {
@@ -52,4 +62,5 @@ public class HttpInterface extends AbstractInterface {
     public void addRequestHeaderValue(HttpRequestHeaderValue httpRequestHeaderValue) {
         this.httpRequest.addHttpHeaderValue(httpRequestHeaderValue);
     }
+
 }

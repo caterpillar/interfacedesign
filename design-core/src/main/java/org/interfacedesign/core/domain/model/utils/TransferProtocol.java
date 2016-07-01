@@ -11,8 +11,7 @@ import java.util.List;
  * 实现业务需求
  */
 public enum TransferProtocol {
-    HTTP1("http1", "http"),
-    HTTP2("http2", "http"),
+    HTTP("http1", "http"),
     HTTPS("https", "https"),
     FTP("ftp", "ftp"),
     TCP("tcp", "tcp"),
@@ -21,8 +20,7 @@ public enum TransferProtocol {
     private final static List<TransferProtocol> resourceProtocol = new ArrayList<TransferProtocol>()
     {
         {
-            add(HTTP1);
-            add(HTTP2);
+            add(HTTP);
             add(HTTPS);
             add(FTP);
         }
@@ -55,6 +53,6 @@ public enum TransferProtocol {
     }
 
     public static void main(String[] args) {
-        System.out.println(TransferProtocol.HTTP1);
+        System.out.println(TransferProtocol.HTTP);
     }
 }
