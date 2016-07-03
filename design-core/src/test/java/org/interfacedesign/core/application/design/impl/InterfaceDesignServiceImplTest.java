@@ -42,4 +42,18 @@ public class InterfaceDesignServiceImplTest extends BaseRolesInitTest {
         assertNotNull(defaultSimpleInterface.getHttpResponse());
         assertNotNull(defaultSimpleInterface);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    @Transactional
+    public void testCreateSameUrlDefaultSimpleInterface() throws Exception {
+        Project project = projectManageService.createProject(admin.getId(), "测试项目", "用于测试项目");
+        HttpInterface defaultSimpleInterface = interfaceDesignService.createDefaultSimpleInterface(designer.getId(), project.getId(),
+                "测试接口", "测试接口用于测试简单接口的创建", "http://www.baidu.com");
+        assertNotNull(defaultSimpleInterface);
+
+        interfaceDesignService.createDefaultSimpleInterface(designer.getId(), project.getId(),
+                "测试接口", "测试接口用于测试简单接口的创建", "http://www.baidu.com");
+    }
+
+
 }
