@@ -4,6 +4,7 @@ import org.interfacedesign.core.BaseRolesInitTest;
 import org.interfacedesign.core.application.design.InterfaceDesignService;
 import org.interfacedesign.core.application.design.ProjectManageService;
 import org.interfacedesign.core.domain.model.design.entity.HttpInterface;
+import org.interfacedesign.core.domain.model.design.entity.HttpRequestParameter;
 import org.interfacedesign.core.domain.model.project.Project;
 import org.interfacedesign.core.domain.model.project.ProjectRepository;
 import org.interfacedesign.core.domain.model.utils.TransferProtocol;
@@ -48,11 +49,23 @@ public class InterfaceDesignServiceImplTest extends BaseRolesInitTest {
     public void testCreateSameUrlDefaultSimpleInterface() throws Exception {
         Project project = projectManageService.createProject(admin.getId(), "测试项目", "用于测试项目");
         HttpInterface defaultSimpleInterface = interfaceDesignService.createDefaultSimpleInterface(designer.getId(), project.getId(),
-                "测试接口", "测试接口用于测试简单接口的创建", "http://www.baidu.com");
+                "测试接口", "测试接口用于测试简单接口的创建", "http://www.interfacedesigner.com");
         assertNotNull(defaultSimpleInterface);
 
         interfaceDesignService.createDefaultSimpleInterface(designer.getId(), project.getId(),
-                "测试接口", "测试接口用于测试简单接口的创建", "http://www.baidu.com");
+                "测试接口", "测试接口用于测试简单接口的创建", "http://www.interfacedesigner.com");
+    }
+
+    @Test
+    @Transactional
+    public void testAddRequestParameter() {
+        Project project = projectManageService.createProject(admin.getId(), "测试项目", "用于测试项目");
+        HttpInterface defaultSimpleInterface = interfaceDesignService.createDefaultSimpleInterface(designer.getId(), project.getId(),
+                "测试接口", "测试接口用于测试简单接口的创建", "http://www.interfacedesigner.com");
+        HttpRequestParameter httpRequestParameter = interfaceDesignService.addRequestParameter(designer.getId(),
+                defaultSimpleInterface.getId(), "name", "姓名", "Steven Lee", "String");
+        assertNotNull(httpRequestParameter);
+        assertNotNull(httpRequestParameter.getId());
     }
 
 

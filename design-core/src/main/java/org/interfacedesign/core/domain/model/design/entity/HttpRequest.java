@@ -19,7 +19,7 @@ public class HttpRequest extends AbstractRequest {
     @Column(name = "http_method", length = 10)
     private HttpMethod httpMethod;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "httpRequest")
-    private List<HttpParameter> httpParameters = new ArrayList<HttpParameter>();
+    private List<HttpRequestParameter> httpRequestParameters = new ArrayList<HttpRequestParameter>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "httpRequest")
     private Set<HttpRequestHeaderValue> httpRequestHeaderValues = new HashSet<HttpRequestHeaderValue>();
     @OneToOne(cascade = CascadeType.ALL, optional = true)
@@ -61,9 +61,9 @@ public class HttpRequest extends AbstractRequest {
         this.requestUrl = requestUrl;
     }
 
-    boolean addParameter(HttpParameter httpParameter) {
-        Validate.notNull(httpParameter, "不能添加空参数");
-        return httpParameters.add(httpParameter);
+    boolean addParameter(HttpRequestParameter httpRequestParameter) {
+        Validate.notNull(httpRequestParameter, "不能添加空参数");
+        return httpRequestParameters.add(httpRequestParameter);
     }
 
     boolean addHttpHeaderValue(HttpRequestHeaderValue httpRequestHeaderValue) {
@@ -71,8 +71,8 @@ public class HttpRequest extends AbstractRequest {
         return httpRequestHeaderValues.add(httpRequestHeaderValue);
     }
 
-    public Collection<HttpParameter> getParameters() {
-        return new ArrayList<HttpParameter>(this.httpParameters);
+    public Collection<HttpRequestParameter> getParameters() {
+        return new ArrayList<HttpRequestParameter>(this.httpRequestParameters);
     }
 
     public Collection<HttpRequestHeaderValue> getHeaderValues() {

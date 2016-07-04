@@ -55,8 +55,8 @@ public class HttpInterface extends AbstractInterface {
         this.httpRequest.setHttpMethod(httpMethod);
     }
 
-    public void addRequestParameter(HttpParameter httpParameter) {
-        this.httpRequest.addParameter(httpParameter);
+    public void addRequestParameter(HttpRequestParameter httpRequestParameter) {
+        this.httpRequest.addParameter(httpRequestParameter);
     }
 
     public void addRequestHeaderValue(HttpRequestHeaderValue httpRequestHeaderValue) {

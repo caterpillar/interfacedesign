@@ -57,4 +57,6 @@ public class DesignStage extends LongIdEntity implements Comparable<DesignStage>
         }
         return this.beginTime.compareTo(o.getBeginTime());
     }
+
+    DesignStage(){}
 }
