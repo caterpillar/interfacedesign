@@ -7,6 +7,7 @@ import org.interfacedesign.core.domain.model.design.entity.HttpInterface;
 import org.interfacedesign.core.domain.model.design.entity.HttpRequestParameter;
 import org.interfacedesign.core.domain.model.project.Project;
 import org.interfacedesign.core.domain.model.project.ProjectRepository;
+import org.interfacedesign.core.domain.model.utils.MessageProtocol;
 import org.interfacedesign.core.domain.model.utils.TransferProtocol;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,9 +87,24 @@ public class InterfaceDesignServiceImplTest extends BaseRolesInitTest {
             }
         };
         HttpRequestParameter httpRequestParameter = interfaceDesignService.addRequestParameter(designer.getId(),
-                defaultSimpleInterface.getId(), "name", "性别", enumParameterValues, "String");
+                defaultSimpleInterface.getId(), "sex", "性别", enumParameterValues, "String");
         assertNotNull(httpRequestParameter);
         assertNotNull(httpRequestParameter.getId());
+    }
+
+    @Test
+//    @Transactional
+    public void testUpdateResponseBody() {
+        Project project = projectManageService.createProject(admin.getId(), "测试项目", "用于测试项目");
+        HttpInterface defaultSimpleInterface = interfaceDesignService.createDefaultSimpleInterface(designer.getId(), project.getId(),
+                "测试接口", "测试接口用于测试简单接口的创建", "http://www.interfacedesigner.com");
+        interfaceDesignService.updateResponseBody(designer.getId(), defaultSimpleInterface.getId(), "alps alps", MessageProtocol.JSON);
+    }
+
+    @Test
+    @Transactional
+    public void testAddRequestHeaderValue() {
+        // TODO 未测试
     }
 
 }

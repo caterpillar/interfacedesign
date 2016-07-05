@@ -22,12 +22,6 @@ public class HttpInterface extends AbstractInterface {
     @JoinColumn(name = "response_id")
     private HttpResponse httpResponse;
 
-
-    HttpInterface() {
-        super.setTransferProtocol(TransferProtocol.HTTP);
-        super.setResponseMessageProtocol(MessageProtocol.JSON);
-    }
-
     public HttpInterface(String name, String description, String requestUrl, Project project) {
         this(name, description, requestUrl, TransferProtocol.HTTP, MessageProtocol.JSON, project);
     }
@@ -37,6 +31,15 @@ public class HttpInterface extends AbstractInterface {
         this.lastModifyTime = new Date();
         this.httpRequest = new HttpRequest(requestUrl, this);
         this.httpResponse = new HttpResponse(this);
+    }
+
+    public void updateResponseBody(String apls) {
+        httpResponse.updateResponseBody(apls);
+    }
+
+    public void addResponseBodyExample(MessageProtocol exampleProtocol) {
+        final HttpResponseBody responseBody = httpResponse.getResponseBody();
+        responseBody.addResponseBodyExample(exampleProtocol);
     }
 
     public HttpRequest getHttpRequest() {
@@ -63,4 +66,6 @@ public class HttpInterface extends AbstractInterface {
         this.httpRequest.addHttpHeaderValue(httpRequestHeader);
     }
 
+    HttpInterface() {
+    }
 }

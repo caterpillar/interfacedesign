@@ -18,26 +18,28 @@ public class HttpResponse extends AbstractResponse {
     private HttpResponseStatus status;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "httpResponse")
     private Set<HttpResponseHeader> responseHeaderValues = new HashSet<HttpResponseHeader>();
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "response_body_id")
     private HttpResponseBody responseBody;
-    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    @OneToOne(cascade = CascadeType.REFRESH, optional = true)
     @JoinColumn(name = "http_interface_id")
     private HttpInterface httpInterface;
 
     public HttpResponse(HttpInterface httpInterface) {
-        this(HttpResponseStatus.OK, null, httpInterface);
+        this(HttpResponseStatus.OK, httpInterface);
     }
 
-    public HttpResponse(HttpResponseStatus status,
-                        HttpResponseBody responseBody, HttpInterface httpInterface) {
+    public HttpResponse(HttpResponseStatus status, HttpInterface httpInterface) {
         setHttpResponseStatus(status);
-        setResponseBody(responseBody);
         setHttpInterface(httpInterface);
     }
 
-    void setResponseBody(HttpResponseBody responseBody) {
-        this.responseBody = responseBody;
+    void updateResponseBody(String alps) {
+        if(this.responseBody == null) {
+            this.responseBody = new HttpResponseBody(alps, this);
+        } else {
+            this.responseBody.updateAlps(alps);
+        }
     }
 
     void setHttpInterface(HttpInterface httpInterface) {
@@ -48,6 +50,10 @@ public class HttpResponse extends AbstractResponse {
     void setHttpResponseStatus(HttpResponseStatus status) {
         Validate.notNull(status);
         this.status = status;
+    }
+
+    public HttpResponseBody getResponseBody() {
+        return responseBody;
     }
 
     HttpResponse() {

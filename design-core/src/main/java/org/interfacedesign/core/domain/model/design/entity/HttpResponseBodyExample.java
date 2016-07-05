@@ -17,23 +17,22 @@ public class HttpResponseBodyExample extends LongIdEntity {
     @Lob
     @Column(name = "response_body_example")
     private String responseBodyExample;
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "http_response_body_id")
     private HttpResponseBody responseBody;
 
-    public HttpResponseBodyExample(MessageProtocol responseMessageProtocol, String responseBodyExample, HttpResponseBody responseBody) {
+    public HttpResponseBodyExample(MessageProtocol responseMessageProtocol, HttpResponseBody responseBody) {
         Validate.notNull(responseMessageProtocol);
         this.responseMessageProtocol = responseMessageProtocol;
-        Validate.notNull(responseBodyExample);
-        this.responseBodyExample = responseBodyExample;
+        generateResponseBodyExample(responseMessageProtocol);
         Validate.notNull(responseBody);
         this.responseBody = responseBody;
     }
 
-    public HttpResponseBodyExample(String responseBodyExample, HttpResponseBody responseBody) {
-        this(MessageProtocol.JSON, responseBodyExample, responseBody);
+    private void generateResponseBodyExample(MessageProtocol responseMessageProtocol) {
+        //TODO 有待考虑实现
+        this.responseBodyExample = responseMessageProtocol.toString() + "--" + "example";
     }
-
 
     public MessageProtocol getResponseMessageProtocol() {
         return responseMessageProtocol;

@@ -16,7 +16,7 @@ public class HttpResponseBody extends LongIdEntity {
     @Lob
     @Column(name = "alps")
     private String alps;
-    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    @OneToOne(cascade = CascadeType.REFRESH, optional = true)
     @JoinColumn(name = "http_response_id")
     private HttpResponse httpResponse;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "responseBody")
@@ -28,11 +28,15 @@ public class HttpResponseBody extends LongIdEntity {
         responseBodyExamples = new HashSet<HttpResponseBodyExample>();
     }
 
-    public void addResponseBodyExample(MessageProtocol responseMessageProtocol, String responseBodyExample) {
+    public void updateAlps(String alps) {
+        this.alps = alps;
+    }
+
+    public void addResponseBodyExample(MessageProtocol responseMessageProtocol) {
         if(responseBodyExamples == null) {
             responseBodyExamples = new HashSet<HttpResponseBodyExample>();
         }
-        HttpResponseBodyExample responseBodyExample1 = new HttpResponseBodyExample(responseMessageProtocol, responseBodyExample, this);
+        HttpResponseBodyExample responseBodyExample1 = new HttpResponseBodyExample(responseMessageProtocol, this);
         responseBodyExamples.add(responseBodyExample1);
     }
 

@@ -15,6 +15,7 @@ import org.interfacedesign.core.domain.model.project.Project;
 import org.interfacedesign.core.domain.model.project.ProjectRepository;
 import org.interfacedesign.core.domain.model.role.Designer;
 import org.interfacedesign.core.domain.model.role.DesignerRepository;
+import org.interfacedesign.core.domain.model.utils.MessageProtocol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,6 +70,7 @@ public class InterfaceDesignServiceImpl implements InterfaceDesignService {
         return httpRequestParameter;
     }
 
+    @Transactional
     public HttpRequestParameter addRequestParameter(Long designerId, Long interfaceId, String name, String description,
                                                     Set<HttpRequestParameter.EnumParameterValue> enumExampleValue, String type) {
         HttpInterface httpInterface = getValidateInterface(interfaceId);
@@ -80,6 +82,22 @@ public class InterfaceDesignServiceImpl implements InterfaceDesignService {
         return httpRequestParameter;
     }
 
+    @Transactional
+    public void updateResponseBody(Long designerId, Long interfaceId, String alps, MessageProtocol responseBodyExampleProtocol) {
+        HttpInterface httpInterface = getValidateInterface(interfaceId);
+        httpInterface.updateResponseBody(alps);
+        httpInterface.addResponseBodyExample(responseBodyExampleProtocol);
+    }
+
+    /**
+     * 未测试
+     * @param designerId
+     * @param interfaceId
+     * @param headName
+     * @param exampleValue
+     * @return
+     */
+    @Transactional
     public HttpRequestHeader addRequestHeaderValue(Long designerId, Long interfaceId, String headName, String exampleValue) {
         HttpInterface httpInterface = getValidateInterface(interfaceId);
         HttpHeader httpHeader = httpHeaderRepository.findOne(headName);
