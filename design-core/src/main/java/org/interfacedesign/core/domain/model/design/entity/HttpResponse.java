@@ -17,7 +17,7 @@ public class HttpResponse extends AbstractResponse {
     @Column(name = "status", length = 5, nullable = false)
     private HttpResponseStatus status;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "httpResponse")
-    private Set<HttpResponseHeaderValue> responseHeaderValues = new HashSet<HttpResponseHeaderValue>();
+    private Set<HttpResponseHeader> responseHeaderValues = new HashSet<HttpResponseHeader>();
     @OneToOne
     @JoinColumn(name = "response_body_id")
     private HttpResponseBody responseBody;

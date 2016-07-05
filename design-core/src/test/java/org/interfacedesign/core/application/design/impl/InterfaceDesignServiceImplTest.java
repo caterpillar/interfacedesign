@@ -12,6 +12,11 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -57,7 +62,7 @@ public class InterfaceDesignServiceImplTest extends BaseRolesInitTest {
     }
 
     @Test
-//    @Transactional
+    @Transactional
     public void testAddRequestParameter() {
         Project project = projectManageService.createProject(admin.getId(), "测试项目", "用于测试项目");
         HttpInterface defaultSimpleInterface = interfaceDesignService.createDefaultSimpleInterface(designer.getId(), project.getId(),
@@ -68,5 +73,22 @@ public class InterfaceDesignServiceImplTest extends BaseRolesInitTest {
         assertNotNull(httpRequestParameter.getId());
     }
 
+    @Test
+    @Transactional
+    public void testAddEnumRequestParameter() {
+        Project project = projectManageService.createProject(admin.getId(), "测试项目", "用于测试项目");
+        HttpInterface defaultSimpleInterface = interfaceDesignService.createDefaultSimpleInterface(designer.getId(), project.getId(),
+                "测试接口", "测试接口用于测试简单接口的创建", "http://www.interfacedesigner.com");
+        Set<HttpRequestParameter.EnumParameterValue> enumParameterValues = new HashSet<HttpRequestParameter.EnumParameterValue>() {
+            {
+                add(new HttpRequestParameter.EnumParameterValue("male", "男"));
+                add(new HttpRequestParameter.EnumParameterValue("female", "女"));
+            }
+        };
+        HttpRequestParameter httpRequestParameter = interfaceDesignService.addRequestParameter(designer.getId(),
+                defaultSimpleInterface.getId(), "name", "性别", enumParameterValues, "String");
+        assertNotNull(httpRequestParameter);
+        assertNotNull(httpRequestParameter.getId());
+    }
 
 }

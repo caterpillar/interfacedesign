@@ -3,12 +3,14 @@ package org.interfacedesign.core.application.design.impl;
 import org.apache.commons.lang3.Validate;
 import org.interfacedesign.core.application.design.InterfaceDesignService;
 import org.interfacedesign.core.domain.model.design.entity.HttpInterface;
-import org.interfacedesign.core.domain.model.design.entity.HttpRequestHeaderValue;
+import org.interfacedesign.core.domain.model.design.entity.HttpRequestHeader;
 import org.interfacedesign.core.domain.model.design.entity.HttpRequestParameter;
 import org.interfacedesign.core.domain.model.design.repository.DataTypeRepository;
+import org.interfacedesign.core.domain.model.design.repository.HttpHeaderRepository;
 import org.interfacedesign.core.domain.model.design.repository.HttpInterfaceRepository;
 import org.interfacedesign.core.domain.model.design.repository.HttpParameterRepository;
 import org.interfacedesign.core.domain.model.design.value.DataType;
+import org.interfacedesign.core.domain.model.design.value.HttpHeader;
 import org.interfacedesign.core.domain.model.project.Project;
 import org.interfacedesign.core.domain.model.project.ProjectRepository;
 import org.interfacedesign.core.domain.model.role.Designer;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by lishaohua on 16-6-28.
@@ -35,6 +38,8 @@ public class InterfaceDesignServiceImpl implements InterfaceDesignService {
     private DataTypeRepository dataTypeRepository;
     @Autowired
     private HttpParameterRepository httpParameterRepository;
+    @Autowired
+    private HttpHeaderRepository httpHeaderRepository;
 
 
     @Transactional
@@ -64,8 +69,24 @@ public class InterfaceDesignServiceImpl implements InterfaceDesignService {
         return httpRequestParameter;
     }
 
-    public HttpRequestHeaderValue addRequestHeaderValue(Long designerId, Long interfaceId, String name, String exampleValue) {
-        return null;
+    public HttpRequestParameter addRequestParameter(Long designerId, Long interfaceId, String name, String description,
+                                                    Set<HttpRequestParameter.EnumParameterValue> enumExampleValue, String type) {
+        HttpInterface httpInterface = getValidateInterface(interfaceId);
+        DataType dataType = dataTypeRepository.findOne(type);
+        Validate.notNull(dataType, "%s 数据类型不存在", type);
+        HttpRequestParameter httpRequestParameter = new HttpRequestParameter(name, description, dataType, enumExampleValue, httpInterface.getHttpRequest());
+        httpInterface.addRequestParameter(httpRequestParameter);
+        httpParameterRepository.save(httpRequestParameter);
+        return httpRequestParameter;
+    }
+
+    public HttpRequestHeader addRequestHeaderValue(Long designerId, Long interfaceId, String headName, String exampleValue) {
+        HttpInterface httpInterface = getValidateInterface(interfaceId);
+        HttpHeader httpHeader = httpHeaderRepository.findOne(headName);
+        Validate.notNull(httpHeader, "%s http header不存在", headName);
+        HttpRequestHeader httpRequestHeader = new HttpRequestHeader(httpHeader, exampleValue, httpInterface.getHttpRequest());
+        httpInterface.addRequestHeaderValue(httpRequestHeader);
+        return httpRequestHeader;
     }
 
     private Project getValidateProject(Long projectId) {

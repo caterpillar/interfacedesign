@@ -18,11 +18,11 @@ public class HttpRequest extends AbstractRequest {
     @Enumerated(EnumType.STRING)
     @Column(name = "http_method", length = 10)
     private HttpMethod httpMethod;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "httpRequest")
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "httpRequest")
     private List<HttpRequestParameter> httpRequestParameters = new ArrayList<HttpRequestParameter>();
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "httpRequest")
-    private Set<HttpRequestHeaderValue> httpRequestHeaderValues = new HashSet<HttpRequestHeaderValue>();
-    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "httpRequest")
+    private Set<HttpRequestHeader> httpRequestHeaders = new HashSet<HttpRequestHeader>();
+    @OneToOne(cascade = CascadeType.REFRESH, optional = true)
     @JoinColumn(name = "http_interface_id")
     private HttpInterface httpInterface;
 
@@ -66,19 +66,19 @@ public class HttpRequest extends AbstractRequest {
         return httpRequestParameters.add(httpRequestParameter);
     }
 
-    boolean addHttpHeaderValue(HttpRequestHeaderValue httpRequestHeaderValue) {
-        Validate.notNull(httpRequestHeaderValue, "不能添加空的http header");
-        return httpRequestHeaderValues.add(httpRequestHeaderValue);
+    boolean addHttpHeaderValue(HttpRequestHeader httpRequestHeader) {
+        Validate.notNull(httpRequestHeader, "不能添加空的http header");
+        return httpRequestHeaders.add(httpRequestHeader);
     }
 
     public Collection<HttpRequestParameter> getParameters() {
         return new ArrayList<HttpRequestParameter>(this.httpRequestParameters);
     }
 
-    public Collection<HttpRequestHeaderValue> getHeaderValues() {
-        if(httpRequestHeaderValues == null) {
-            new ArrayList<HttpRequestHeaderValue>();
+    public Collection<HttpRequestHeader> getHeaderValues() {
+        if(httpRequestHeaders == null) {
+            new ArrayList<HttpRequestHeader>();
         }
-        return new ArrayList<HttpRequestHeaderValue>(this.httpRequestHeaderValues);
+        return new ArrayList<HttpRequestHeader>(this.httpRequestHeaders);
     }
 }

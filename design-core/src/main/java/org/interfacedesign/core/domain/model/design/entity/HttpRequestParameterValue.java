@@ -8,8 +8,8 @@ import javax.persistence.*;
  * Created by lishaohua on 16-7-4.
  */
 @Entity(name = "http_request_parameter_value")
-public class HttpRequestParameterValue extends ParameterValue {
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+public class HttpRequestParameterValue extends AbstractValueDesc {
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "http_request_parameter_id")
     private HttpRequestParameter httpRequestParameter;
 
@@ -30,5 +30,6 @@ public class HttpRequestParameterValue extends ParameterValue {
     }
 
     HttpRequestParameterValue() {
+        super();
     }
 }

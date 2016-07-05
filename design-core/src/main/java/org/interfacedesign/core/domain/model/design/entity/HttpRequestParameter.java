@@ -25,26 +25,25 @@ public class HttpRequestParameter extends LongIdEntity {
     }
     )
     private NameDescriptionEntity nameDescription;
-    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER, optional = true)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch=FetchType.EAGER, optional = true)
     @JoinColumn(name = "data_type", referencedColumnName = "name")
     private DataType dataType;
-//    @Column(name = "value", length = 255)
-//    private String value;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "httpRequestParameter")
     private Set<HttpRequestParameterValue> requestParameterValues = new HashSet<HttpRequestParameterValue>();
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "http_request_id")
     private HttpRequest httpRequest;
 
-    public HttpRequestParameter(String name, String description, DataType dataType, String value, HttpRequest httpRequest) {
+    public HttpRequestParameter(String name, String description, DataType dataType, String value,
+                                HttpRequest httpRequest) {
         setNameAndDescription(name, description);
         setDateType(dataType);
         setValue(value);
         setHttpRequest(httpRequest);
     }
 
-    public HttpRequestParameter(String name,String description, DataType dataType, Set<EnumParameterValue> enumParameterValues , HttpRequest httpRequest) {
+    public HttpRequestParameter(String name,String description, DataType dataType,
+                                Set<EnumParameterValue> enumParameterValues , HttpRequest httpRequest) {
         setNameAndDescription(name, description);
         setDateType(dataType);
         setValue(enumParameterValues);
@@ -56,6 +55,8 @@ public class HttpRequestParameter extends LongIdEntity {
             for(EnumParameterValue enumParameterValue : enumParameterValues) {
                 this.requestParameterValues.add(new HttpRequestParameterValue(enumParameterValue, this));
             }
+        } else {
+            throw new IllegalArgumentException("请求参数值不能为空");
         }
     }
 

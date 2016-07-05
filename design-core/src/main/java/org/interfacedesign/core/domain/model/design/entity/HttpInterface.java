@@ -59,8 +59,8 @@ public class HttpInterface extends AbstractInterface {
         this.httpRequest.addParameter(httpRequestParameter);
     }
 
-    public void addRequestHeaderValue(HttpRequestHeaderValue httpRequestHeaderValue) {
-        this.httpRequest.addHttpHeaderValue(httpRequestHeaderValue);
+    public void addRequestHeaderValue(HttpRequestHeader httpRequestHeader) {
+        this.httpRequest.addHttpHeaderValue(httpRequestHeader);
     }
 
 }
