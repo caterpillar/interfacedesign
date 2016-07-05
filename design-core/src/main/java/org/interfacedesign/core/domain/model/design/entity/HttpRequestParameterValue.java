@@ -16,8 +16,17 @@ public class HttpRequestParameterValue extends ParameterValue {
 
     public HttpRequestParameterValue(String value, String description, HttpRequestParameter httpRequestParameter) {
         super(value, description);
+        setHttpRequestParameter(httpRequestParameter);
+    }
+
+    void setHttpRequestParameter(HttpRequestParameter httpRequestParameter) {
         Validate.notNull(httpRequestParameter);
         this.httpRequestParameter = httpRequestParameter;
+    }
+
+    public HttpRequestParameterValue(HttpRequestParameter.EnumParameterValue enumParameterValue, HttpRequestParameter httpRequestParameter) {
+        super(enumParameterValue.getValue(), enumParameterValue.getDescription());
+        setHttpRequestParameter(httpRequestParameter);
     }
 
     HttpRequestParameterValue() {

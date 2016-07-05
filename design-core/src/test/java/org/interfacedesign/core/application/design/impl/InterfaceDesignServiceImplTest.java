@@ -57,7 +57,7 @@ public class InterfaceDesignServiceImplTest extends BaseRolesInitTest {
     }
 
     @Test
-    @Transactional
+//    @Transactional
     public void testAddRequestParameter() {
         Project project = projectManageService.createProject(admin.getId(), "测试项目", "用于测试项目");
         HttpInterface defaultSimpleInterface = interfaceDesignService.createDefaultSimpleInterface(designer.getId(), project.getId(),

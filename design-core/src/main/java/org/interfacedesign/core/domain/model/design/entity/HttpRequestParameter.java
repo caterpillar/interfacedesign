@@ -1,13 +1,17 @@
 package org.interfacedesign.core.domain.model.design.entity;
 
 import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.interfacedesign.base.entity.LongIdEntity;
 import org.interfacedesign.base.util.Assert;
 import org.interfacedesign.core.domain.model.design.value.DataType;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
-import javax.persistence.criteria.Fetch;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,7 +31,7 @@ public class HttpRequestParameter extends LongIdEntity {
 //    @Column(name = "value", length = 255)
 //    private String value;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "httpRequestParameter")
-    private Set<HttpRequestParameterValue> requestPrarameterValues = new HashSet<HttpRequestParameterValue>();
+    private Set<HttpRequestParameterValue> requestParameterValues = new HashSet<HttpRequestParameterValue>();
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "http_request_id")
@@ -38,6 +42,21 @@ public class HttpRequestParameter extends LongIdEntity {
         setDateType(dataType);
         setValue(value);
         setHttpRequest(httpRequest);
+    }
+
+    public HttpRequestParameter(String name,String description, DataType dataType, Set<EnumParameterValue> enumParameterValues , HttpRequest httpRequest) {
+        setNameAndDescription(name, description);
+        setDateType(dataType);
+        setValue(enumParameterValues);
+        setHttpRequest(httpRequest);
+    }
+
+    private void setValue(Set<EnumParameterValue> enumParameterValues) {
+        if(!CollectionUtils.isEmpty(enumParameterValues)) {
+            for(EnumParameterValue enumParameterValue : enumParameterValues) {
+                this.requestParameterValues.add(new HttpRequestParameterValue(enumParameterValue, this));
+            }
+        }
     }
 
     private void setNameAndDescription(String name, String description) {
@@ -54,8 +73,7 @@ public class HttpRequestParameter extends LongIdEntity {
 
     private void setValue(String value) {
         Assert.lengthNoGreater(value, 255, "参数样例值长度不能大于255");
-//        this.value = value;
-        //TODO
+        requestParameterValues.add(new HttpRequestParameterValue(value, null, this));
     }
 
     private void setHttpRequest(HttpRequest httpRequest) {
@@ -83,11 +101,51 @@ public class HttpRequestParameter extends LongIdEntity {
     }
 
     public String getValue() {
-        //todo 暂时修改
-        return null;
+        if(CollectionUtils.isEmpty(this.requestParameterValues)) {
+            return null;
+        }
+        return this.requestParameterValues.toArray(new HttpRequestParameterValue[]{})[0].getValue();
     }
 
 
     HttpRequestParameter() {
+    }
+
+    public static class EnumParameterValue {
+        private final String value;
+        private final String description;
+
+        public EnumParameterValue(String value, String description) {
+            this.value = value;
+            this.description = description;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+
+            if (o == null || getClass() != o.getClass()) return false;
+
+            EnumParameterValue that = (EnumParameterValue) o;
+
+            return new EqualsBuilder()
+                    .append(value, that.value)
+                    .isEquals();
+        }
+
+        @Override
+        public int hashCode() {
+            return new HashCodeBuilder(17, 37)
+                    .append(value)
+                    .toHashCode();
+        }
     }
 }

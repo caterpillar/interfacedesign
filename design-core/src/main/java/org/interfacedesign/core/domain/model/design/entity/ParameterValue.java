@@ -26,5 +26,14 @@ public class ParameterValue extends LongIdEntity {
         this.value = value;
     }
 
+
+    public String getValue() {
+        return value;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     ParameterValue(){}
 }
